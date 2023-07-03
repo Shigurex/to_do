@@ -8,57 +8,50 @@ public class BaseComponent {
 	protected JTextField _email_field;
 	protected JPasswordField _password_field;
 	protected BaseFrame _frame;
-	private Statement _stmt;
-	private Connection _conn;
-	private String _dbname = "./database/test.db";
 
-	public BaseComponent(BaseFrame frame) {
-		_frame = frame;
-		_stmt = null;
-		_conn = null;
-	}
+	public BaseComponent(BaseFrame frame) {_frame = frame;}
 
 	//ログイン後の画面　panelとsqlの操作が混ざっているため検討中
-	public Component createList(String message, String username) {
-		BasePanel panel = new BasePanel(_frame);
-		panel.setLayout(null);
+	//public Component createList(String message, String username) {
+	//	BasePanel panel = new BasePanel(_frame);
+	//	panel.setLayout(null);
 
-		try {
-			Class.forName("org.sqlite.JDBC");
-			_conn = DriverManager.getConnection("jdbc:sqlite:" + _dbname);
-			_stmt = _conn.createStatement();
-			ResultSet rs = _stmt.executeQuery("SELECT * FROM user WHERE name='" + username + "'");
+	//	try {
+	//		Class.forName("org.sqlite.JDBC");
+	//		_conn = DriverManager.getConnection("jdbc:sqlite:" + _dbname);
+	//		_stmt = _conn.createStatement();
+	//		ResultSet rs = _stmt.executeQuery("SELECT * FROM user WHERE name='" + username + "'");
 
-			JLabel flash_label = panel.createLabel(message, 0.45, 0.05, 0.3, 0.05);
-			flash_label.setForeground(Color.GREEN);
-			panel.add(flash_label);
-			int i = 1;
-			while (rs.next()) {
-				JLabel name_label = panel.createLabel(rs.getString("name"), 0.2, 0.2*i, 0.6, 0.05);
-				JLabel email_label = panel.createLabel(rs.getString("email"), 0.2, 0.2*i + 0.1, 0.6, 0.05);
+	//		JLabel flash_label = panel.createLabel(message, 0.45, 0.05, 0.3, 0.05);
+	//		flash_label.setForeground(Color.GREEN);
+	//		panel.add(flash_label);
+	//		int i = 1;
+	//		while (rs.next()) {
+	//			JLabel name_label = panel.createLabel(rs.getString("name"), 0.2, 0.2*i, 0.6, 0.05);
+	//			JLabel email_label = panel.createLabel(rs.getString("email"), 0.2, 0.2*i + 0.1, 0.6, 0.05);
 
-				panel.add(name_label);
-				panel.add(email_label);
-				i++;
-			}
-			rs.close();
-			return (panel);
-		} catch (Exception e) {
-				e.printStackTrace();
-		} finally {
-			try {
-				if (_stmt != null) {
-					_stmt.close();
-				}
-				if (_conn != null) {
-					_conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return (panel);
-		}
-	}
+	//			panel.add(name_label);
+	//			panel.add(email_label);
+	//			i++;
+	//		}
+	//		rs.close();
+	//		return (panel);
+	//	} catch (Exception e) {
+	//			e.printStackTrace();
+	//	} finally {
+	//		try {
+	//			if (_stmt != null) {
+	//				_stmt.close();
+	//			}
+	//			if (_conn != null) {
+	//				_conn.close();
+	//			}
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//		}
+	//		return (panel);
+	//	}
+	//}
 
 	public void resetAllField() {
 		_username_field.setText("");
@@ -71,20 +64,20 @@ public class BaseComponent {
 		_password_field.setText("");
 	}
 
-	public void checkLogin(SignUp signup, Login login, SQL sql) {
+	public void checkLogin(SignUp signup, Login login) {
 		String username = _username_field.getText();
 		String password = new String(_password_field.getPassword());
 		resetNamePass();
 
 		if (username.equals("") || password.equals(""))
 			_frame.changePanel(login.createLogin("Please input all information!"));
-		else if (sql.checkUser(username, password) == true)
-			_frame.changePanel(createList("Login is successful!", username));
+		else if (SQL.checkUser(username, password) == true)
+			; //_frame.changePanel(createList("Login is successful!", username));
 		else
 			_frame.changePanel(login.createLogin("Wrong username or password"));
 	}
 
-	public void checkSignUp(SignUp signup, Login login, SQL sql) {
+	public void checkSignUp(SignUp signup, Login login) {
 		String username = _username_field.getText();
 		String email = _email_field.getText();
 		String password = new String(_password_field.getPassword());
@@ -93,7 +86,7 @@ public class BaseComponent {
 		if (username.equals("") || email.equals("") || password.equals(""))
 			_frame.changePanel(signup.createSignUp("Please input all information!"));
 		else {
-			sql.insertUser(username, email, password);
+			SQL.insertUser(username, email, password);
 			_frame.changePanel(login.createLogin("Create User!"));
 		}
 	}
@@ -101,15 +94,14 @@ public class BaseComponent {
 	public class ButtonAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
-			SQL sql = new SQL(_stmt, _conn, _dbname);
 			SignUp signup = new SignUp(_frame);
 			Login login = new Login(_frame);
 
 			if (cmd.equals("Register")) {
-				checkSignUp(signup, login, sql);
+				checkSignUp(signup, login);
 			}
 			else if (cmd.equals("Login")) {
-				checkLogin(signup, login, sql);
+				checkLogin(signup, login);
 			}
 			else if (cmd.equals("Already Registered"))
 				_frame.changePanel(login.createLogin("Welcome!"));
