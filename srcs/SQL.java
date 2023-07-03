@@ -7,7 +7,7 @@ import java.sql.*;
 public class SQL {
 	private Statement _stmt;
 	private Connection _conn;
-	private String _dbname = "test.db";
+	private String _dbname = "./database/test.db";
 
 	public SQL(Statement _stmt, Connection _conn, String _dbname) {
 		this._stmt = _stmt;

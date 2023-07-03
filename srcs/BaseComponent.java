@@ -10,7 +10,7 @@ public class BaseComponent {
 	protected BaseFrame _frame;
 	private Statement _stmt;
 	private Connection _conn;
-	private String _dbname = "test.db";
+	private String _dbname = "./database/test.db";
 
 	public BaseComponent(BaseFrame frame) {
 		_frame = frame;
