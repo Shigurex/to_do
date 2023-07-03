@@ -8,11 +8,12 @@ public class List extends BaseComponent{
 		super(frame);
 	}
 
-	public Component createList() {
+	public Component createList(String username) {
+		_username = username;
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("List", 0.45, 0.1, 0.3, 0.05);
+		JLabel label = panel.createLabel((_username + " List"), 0.45, 0.1, 0.3, 0.05);
 
 		panel.add(label);
 

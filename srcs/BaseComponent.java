@@ -7,6 +7,7 @@ public class BaseComponent {
 	protected JTextField _username_field;
 	protected JTextField _email_field;
 	protected JPasswordField _password_field;
+	protected static String _username;
 	protected BaseFrame _frame;
 
 	public BaseComponent(BaseFrame frame) {_frame = frame;}
@@ -65,38 +66,37 @@ public class BaseComponent {
 	}
 
 	public void checkLogin(SignUp signup, Login login) {
-		String username = _username_field.getText();
+		_username = _username_field.getText();
 		String password = new String(_password_field.getPassword());
 		resetNamePass();
 
-
-		if (username.equals("") || password.equals(""))
+		if (_username.equals("") || password.equals(""))
 			_frame.changePanel(login.createLogin("Please input all information!"));
-		else if (SQL.checkUser(username, password) == true)
+		else if (SQL.checkUser(_username, password) == true)
 		{
 			List list = new List(_frame);
 			Menu menu = new Menu(_frame);
-			_frame.changePanel_Menu(list.createList(), menu.createMenu());
+			_frame.changePanel_Menu(list.createList(_username), menu.createMenu());
 		}
 		else
 			_frame.changePanel(login.createLogin("Wrong username or password"));
 	}
 
 	public void checkSignUp(SignUp signup, Login login) {
-		String username = _username_field.getText();
+		_username = _username_field.getText();
 		String email = _email_field.getText();
 		String password = new String(_password_field.getPassword());
 		resetAllField();
 
-		if (username.equals("") || email.equals("") || password.equals(""))
+		if (_username.equals("") || email.equals("") || password.equals(""))
 			_frame.changePanel(signup.createSignUp("Please input all information!"));
 		else {
-			SQL.insertUser(username, email, password);
+			SQL.insertUser(_username, email, password);
 			_frame.changePanel(login.createLogin("Create User!"));
 		}
 	}
 
-	public class ButtonAction implements ActionListener {
+	protected class ButtonAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			SignUp signup = new SignUp(_frame);
@@ -116,15 +116,17 @@ public class BaseComponent {
 			else if (cmd.equals("Start"))
 				_frame.changePanel(signup.createSignUp(""));
 			else if (cmd.equals("Already Registered"))
-				_frame.changePanel(login.createLogin("Welcome!"));
+				_frame.changePanel(login.createLogin(""));
 			else if (cmd.equals("Back SignUp"))
-				_frame.changePanel(signup.createSignUp("Welcome!"));
+				_frame.changePanel(signup.createSignUp(""));
 			else if (cmd.equals("My Info"))
 				_frame.changePanel_Menu(myinfo.createMyInfo(), menu.createMenu());
-			else if (cmd.equals("My Info Edit"))
+			else if (cmd.equals("Go to Edit"))
+				_frame.changePanel_Menu(myinfo_edit.createMyInfoEdit(), menu.createMenu());
+			else if (cmd.equals("Complete Editing"))
 				_frame.changePanel_Menu(myinfo_edit.createMyInfoEdit(), menu.createMenu());
 			else if (cmd.equals("My List"))
-				_frame.changePanel_Menu(list.createList(), menu.createMenu());
+				_frame.changePanel_Menu(list.createList(_username), menu.createMenu());
 			else if (cmd.equals("Users"))
 				_frame.changePanel_Menu(users.createUsers(), menu.createMenu());
 			else if (cmd.equals("Logout"))
