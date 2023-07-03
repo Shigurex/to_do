@@ -113,6 +113,8 @@ public class BaseComponent {
 			else if (cmd.equals("Login")) {
 				checkLogin(signup, login);
 			}
+			else if (cmd.equals("Start"))
+				_frame.changePanel(signup.createSignUp(""));
 			else if (cmd.equals("Already Registered"))
 				_frame.changePanel(login.createLogin("Welcome!"));
 			else if (cmd.equals("Back SignUp"))

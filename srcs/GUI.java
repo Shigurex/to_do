@@ -8,8 +8,8 @@ public class GUI {
 		SQL.getLog();
 		BaseFrame frame = new BaseFrame("ToDo", 900, 600);
 		// BaseComponent component = new BaseComponent(frame);
-		SignUp signup = new SignUp(frame);
-		Component content = signup.createSignUp("Welcome");
+		Start start = new Start(frame);
+		Component content = start.createStart();
 		frame.getContentPane().add(content);
 		frame.setVisible(true);
 	}
