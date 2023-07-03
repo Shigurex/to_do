@@ -12,4 +12,4 @@ SRCS=$(find "$SRCDIR" -mindepth 1 -type f -name "*.java")
 javac -d "$OBJDIR" $SRCS
 
 # 実行
-java -cp "$OBJDIR":"$JDBC" "$MAIN"
+java -cp "$OBJDIR"';'"$JDBC" "$MAIN"

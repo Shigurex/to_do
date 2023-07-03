@@ -42,4 +42,12 @@ public class BaseFrame extends JFrame {
 		validate();
 		repaint();
 	}
+
+	public void changePanel_Menu(Component content, Component menu) {
+		getContentPane().removeAll();
+		super.add(content);
+		super.add(menu, BorderLayout.PAGE_START);
+		validate();
+		repaint();
+	}
 }

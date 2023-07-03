@@ -69,10 +69,15 @@ public class BaseComponent {
 		String password = new String(_password_field.getPassword());
 		resetNamePass();
 
+
 		if (username.equals("") || password.equals(""))
 			_frame.changePanel(login.createLogin("Please input all information!"));
 		else if (SQL.checkUser(username, password) == true)
-			; //_frame.changePanel(createList("Login is successful!", username));
+		{
+			List list = new List(_frame);
+			Menu menu = new Menu(_frame);
+			_frame.changePanel_Menu(list.createList(), menu.createMenu());
+		}
 		else
 			_frame.changePanel(login.createLogin("Wrong username or password"));
 	}
@@ -96,6 +101,11 @@ public class BaseComponent {
 			String cmd = e.getActionCommand();
 			SignUp signup = new SignUp(_frame);
 			Login login = new Login(_frame);
+			Users users = new Users(_frame);
+			MyInfo myinfo = new MyInfo(_frame);
+			MyInfoEdit myinfo_edit = new MyInfoEdit(_frame);
+			List list = new List(_frame);
+			Menu menu = new Menu(_frame);
 
 			if (cmd.equals("Register")) {
 				checkSignUp(signup, login);
@@ -107,6 +117,18 @@ public class BaseComponent {
 				_frame.changePanel(login.createLogin("Welcome!"));
 			else if (cmd.equals("Back SignUp"))
 				_frame.changePanel(signup.createSignUp("Welcome!"));
+			else if (cmd.equals("My Info"))
+				_frame.changePanel_Menu(myinfo.createMyInfo(), menu.createMenu());
+			else if (cmd.equals("My Info Edit"))
+				_frame.changePanel_Menu(myinfo_edit.createMyInfoEdit(), menu.createMenu());
+			else if (cmd.equals("My List"))
+				_frame.changePanel_Menu(list.createList(), menu.createMenu());
+			else if (cmd.equals("Users"))
+				_frame.changePanel_Menu(users.createUsers(), menu.createMenu());
+			else if (cmd.equals("Logout"))
+				_frame.changePanel(login.createLogin("Logout succesfully!"));
+			else if (cmd.equals("Exit"))
+				System.exit(0);
 		}
 	}
 }
