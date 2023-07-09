@@ -88,6 +88,7 @@ public class BaseComponent {
 		String password = new String(_password_field.getPassword());
 		resetAllField();
 
+		
 		if (_username.equals("") || email.equals("") || password.equals(""))
 			_frame.changePanel(signup.createSignUp("Please input all information!"));
 		else {
