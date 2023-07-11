@@ -9,8 +9,16 @@ public class Start extends BasePage {
 
 	public class Action implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			BasePage page = new Login(Start.this);
-			Start.this._frame.changePanel(page.createPage());
+			String cmd = e.getActionCommand();
+			BasePage page = null;
+			
+			if (cmd.equals("Start"))
+				page = new Login(Start.this);
+			else
+				page = new Error(Start.this);
+			
+			if (page != null)
+				Start.this._frame.changePanel(page.createPage());
 		}
 	}
 
