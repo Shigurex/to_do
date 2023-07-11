@@ -7,6 +7,7 @@ public class Login extends BasePage {
 	private JPasswordField password_field;
 	private JLabel username_error;
 	private JLabel password_error;
+
 	public Login(BasePage page) { super(page); }
 	public Login(BaseFrame frame) { super(frame); }
 
