@@ -1,14 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.sql.*;
 
 public class Users extends BaseComponent{
 	public Users(BaseFrame frame) {
 		super(frame);
 	}
 
-	public Component createUsers() {
+	public Component create() {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 

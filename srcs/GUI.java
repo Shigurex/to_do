@@ -1,16 +1,16 @@
 import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.sql.*;
 
 public class GUI {
+	private static final String _title = "ToDo";
+	private static final int _win_width = 900;
+	private static final int _win_height = 600;
+
 	public static void main(String[] args) {
-		SQL.getLog();
-		BaseFrame frame = new BaseFrame("ToDo", 900, 600);
-		// BaseComponent component = new BaseComponent(frame);
-		Start start = new Start(frame);
-		Component content = start.createStart();
-		frame.getContentPane().add(content);
+		//SQL.getLog();
+		BaseFrame frame = new BaseFrame(GUI._title, GUI._win_width, GUI._win_height);
+		BasePage page = new Start(frame);
+		Component component = page.createPage();
+		frame.changePanel(component);
 		frame.setVisible(true);
 	}
 }

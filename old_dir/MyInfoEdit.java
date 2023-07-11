@@ -1,14 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.sql.*;
 
 public class MyInfoEdit extends BaseComponent{
 	public MyInfoEdit(BaseFrame frame) {
 		super(frame);
 	}
 
-	public Component createMyInfoEdit() {
+	public Component create() {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
@@ -33,7 +31,6 @@ public class MyInfoEdit extends BaseComponent{
 		JButton button = panel.createButton("Complete Editing", 0.4, 0.7, 0.2, 0.1);
 		ButtonAction buttonlistener = new ButtonAction();
 		button.addActionListener(buttonlistener);
-		button.setActionCommand("Complete Editing");
 		panel.add(button);
 
 		return (panel);

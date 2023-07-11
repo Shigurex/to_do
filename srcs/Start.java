@@ -1,16 +1,21 @@
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
-import java.sql.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
-public class Start extends BaseComponent {
+public class Start extends BasePage {
+	public Start(BasePage page) { super(page); }
+	public Start(BaseFrame frame) { super(frame); }
 
-	public Start(BaseFrame frame) {
-		super(frame);
+	public class Action implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			BasePage page = new Login(Start.this);
+			Start.this._frame.changePanel(page.createPage());
+		}
 	}
 
-	public Component createStart()  {
-		BasePanel panel = new BasePanel(_frame);
+	public Component createPage() {
+		BasePanel panel = new BasePanel(this._frame);
 		panel.setLayout(null);
 
 		JLabel label = panel.createLabel("To Do", 0.45, 0.2, 0.1, 0.05);
@@ -18,9 +23,8 @@ public class Start extends BaseComponent {
 		panel.add(label);
 
 		JButton button = panel.createButton("Start", 0.4, 0.5, 0.2, 0.1);
-		ButtonAction buttonlistener = new ButtonAction();
-		button.addActionListener(buttonlistener);
-		button.setActionCommand("Start");
+		Action action = new Action();
+		button.addActionListener(action);
 		panel.add(button);
 
 		return (panel);

@@ -11,12 +11,6 @@ public class BasePanel extends JPanel {
 		this._win_height = frame.getWinHeight();
 	}
 
-	public BasePanel(String title, int win_width, int win_height) {
-		this._title = title;
-		this._win_width = win_width;
-		this._win_height = win_height;
-	}
-
 	public int convertAbsToRelValue(int abs_value, double rate) {
 		int rel_value = (int)(abs_value * rate);
 		return (rel_value);

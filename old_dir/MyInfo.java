@@ -1,14 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.sql.*;
 
 public class MyInfo extends BaseComponent{
 	public MyInfo(BaseFrame frame) {
 		super(frame);
 	}
 
-	public Component createMyInfo() {
+	public Component create() {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
@@ -30,7 +28,6 @@ public class MyInfo extends BaseComponent{
 		JButton button = panel.createButton("Go to Edit", 0.4, 0.7, 0.2, 0.1);
 		ButtonAction buttonlistener = new ButtonAction();
 		button.addActionListener(buttonlistener);
-		button.setActionCommand("Go to Edit");
 		panel.add(button);
 
 		return (panel);

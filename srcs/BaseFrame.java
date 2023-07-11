@@ -1,8 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.sql.*;
-
 
 public class BaseFrame extends JFrame {
 	private String _title;
@@ -17,24 +14,15 @@ public class BaseFrame extends JFrame {
 		this._win_height = height;
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(width, height);
+		this.setSize(this._win_width, this._win_height);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
 	}
 
-
-	public String getTitle() {
-		return (this._title);
-	}
-
-	public int getWinWidth() {
-		return (this._win_width);
-	}
-
-	public int getWinHeight() {
-		return (this._win_height);
-	}
+	public String getTitle() { return (this._title); }
+	public int getWinWidth() { return (this._win_width); }
+	public int getWinHeight() { return (this._win_height); }
 
 	public void changePanel(Component content) {
 		getContentPane().removeAll();
@@ -43,11 +31,12 @@ public class BaseFrame extends JFrame {
 		repaint();
 	}
 
-	public void changePanel_Menu(Component content, Component menu) {
-		getContentPane().removeAll();
-		super.add(content);
-		super.add(menu, BorderLayout.PAGE_START);
-		validate();
-		repaint();
-	}
+	//public void changePanelMenu(Component content, Component menu) {
+	//	getContentPane().removeAll();
+	//	super.add(content);
+	//	//super.add(menu, BorderLayout.PAGE_START);
+	//	super.add(menu);
+	//	validate();
+	//	repaint();
+	//}
 }
