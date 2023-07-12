@@ -35,7 +35,7 @@ public class Login extends BasePage {
 			if (!isValid(username, password))
 				return (null);
 			else if (SQL.checkUser(username, password) == true)
-				return (new SignUp(Login.this));
+				return (new MyInfo(Login.this, username));
 			else
 				return (new Error(Login.this));
 		}
@@ -47,11 +47,15 @@ public class Login extends BasePage {
 				username_error.setText("Please input username");
 				is_valid = false;
 			}
+			else
+				username_error.setText("");
 			if (password.equals(""))
 			{
 				password_error.setText("Please input password");
 				is_valid = false;
 			}
+			else
+				password_error.setText("");
 			return (is_valid);
 		}
 
@@ -72,9 +76,9 @@ public class Login extends BasePage {
 		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
 		username_error = panel.createLabel("",0.2, 0.25, 0.6, 0.05);
 		username_error.setForeground(Color.RED);
-		JLabel password_label = panel.createLabel("password: ", 0.05, 0.4, 0.15, 0.05);
-		password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
-		password_error = panel.createLabel("",0.2, 0.45, 0.6, 0.05);
+		JLabel password_label = panel.createLabel("password: ", 0.05, 0.3, 0.15, 0.05);
+		password_field = panel.createPasswordField("", 0.2, 0.3, 0.6, 0.05);
+		password_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
 		password_error.setForeground(Color.RED);
 
 		panel.add(label);

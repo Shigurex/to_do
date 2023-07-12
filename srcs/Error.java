@@ -7,7 +7,18 @@ public class Error extends BasePage {
 	public Error(BaseFrame frame) { super(frame); }
 
 	public class Action implements ActionListener {
-		public void actionPerformed(ActionEvent e) { return ;}
+		public void actionPerformed(ActionEvent e) {
+			String cmd = e.getActionCommand();
+			BasePage page = null;
+
+			if (cmd.equals("Back to Start"))
+				page = new Start(Error.this);
+			else
+				page = new Error(Error.this);
+
+			if (page != null)
+				Error.this._frame.changePanel(page.createPage());
+		}
 	}
 
 	public Component createPage() {
@@ -16,7 +27,13 @@ public class Error extends BasePage {
 
 		JLabel label = panel.createLabel("Error", 0.45, 0.2, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setForeground(Color.RED);
 		panel.add(label);
+
+		JButton button = panel.createButton("Back to Start", 0.4, 0.5, 0.2, 0.1);
+		Action action = new Action();
+		button.addActionListener(action);
+		panel.add(button);
 
 		return (panel);
 	}

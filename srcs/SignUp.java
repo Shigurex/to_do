@@ -3,6 +3,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class SignUp extends BasePage {
+	private JTextField username_field;
+	private JTextField email_field;
+	private JPasswordField password_field;
+	private JLabel username_error;
+	private JLabel email_error;
+	private JLabel password_error;
+
 	public SignUp(BasePage page) { super(page); }
 	public SignUp(BaseFrame frame) { super(frame); }
 
@@ -10,9 +17,9 @@ public class SignUp extends BasePage {
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
-			
+
 			if (cmd.equals("Register"))
-				page = new Login(SignUp.this);
+				page = checkSignUp();
 			else if (cmd.equals("Already Registered"))
 				page = new Login(SignUp.this);
 			else
@@ -21,37 +28,82 @@ public class SignUp extends BasePage {
 			if (page != null)
 				SignUp.this._frame.changePanel(page.createPage());
 		}
+
+		public BasePage checkSignUp() {
+			String username = username_field.getText();
+			String email = email_field.getText();
+			String password = new String(password_field.getPassword());
+			resetAllField();
+
+			if (!isValid(username, email, password))
+				return (null);
+			else
+			{
+				SQL.insertUser(username, email, password);
+				return (new Login(SignUp.this));
+			}
+		}
+
+		public boolean isValid(String username, String email, String password) {
+			boolean is_valid = true;
+			if (username.equals(""))
+			{
+				username_error.setText("Please input username");
+				is_valid = false;
+			}
+			else
+				username_error.setText("");
+			if (email.equals(""))
+			{
+				email_error.setText("Please input username");
+				is_valid = false;
+			}
+			else
+				email_error.setText("");
+			if (password.equals(""))
+			{
+				password_error.setText("Please input password");
+				is_valid = false;
+			}
+			else
+				password_error.setText("");
+			return (is_valid);
+		}
+
+		public void resetAllField() {
+			username_field.setText("");
+			email_field.setText("");
+			password_field.setText("");
+		}
 	}
 
 	public Component createPage() {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
-		//JLabel welcome_label = panel.createLabel(message, 0.45, 0.05, 0.3, 0.05);
 		JLabel label = panel.createLabel("SignUp", 0.45, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
-
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
-		//JLabel name_err_label = panel.createLabel(name_err, 0.2, 0.25, 0.5,0.05);
-		JTextField username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
+		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
+		JLabel username_error = panel.createLabel("", 0.2, 0.25, 0.5,0.05);
 
 		JLabel email_label = panel.createLabel("email: ", 0.05, 0.3, 0.15, 0.05);
-		//JLabel email_err_label = panel.createLabel(email_err, 0.2, 0.35, 0.5, 0.05);
-		JTextField email_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
+		email_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
+		JLabel email_error = panel.createLabel("", 0.2, 0.35, 0.5, 0.05);
 
 		JLabel password_label = panel.createLabel("password: ", 0.05, 0.4, 0.15, 0.05);
-		//JLabel password_err_label = panel.createLabel(password_err, 0.2, 0.45, 0.5, 0.05);
-		JPasswordField password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
+		password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
+		JLabel password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
 
 		panel.add(label);
 		panel.add(username_label);
-		//panel.add(name_err_label);
+		panel.add(username_error);
 		panel.add(username_field);
 		panel.add(email_label);
-		//panel.add(email_err_label);
+		panel.add(email_error);
 		panel.add(email_field);
 		panel.add(password_label);
-		//panel.add(password_err_label);
+		panel.add(password_error);
 		panel.add(password_field);
 
 		Action action = new Action();
