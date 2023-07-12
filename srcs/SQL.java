@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SQL {
 	private static String db_dir = "./database/";
@@ -81,9 +80,5 @@ public class SQL {
 			}
 		}
 		return (result);
-	}
-
-	public static void insertUser(String name, String email, String password) {
-		insert("insert into member (name, email, password) VALUES(?, ?, ?)", name, email, password);
 	}
 }

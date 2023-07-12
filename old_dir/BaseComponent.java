@@ -50,6 +50,7 @@ abstract public class BaseComponent {
 		if (_username.equals("") || email.equals("") || password.equals(""))
 			_frame.changePanel(signup.create());
 		else {
+			
 			SQL.insertUser(_username, email, password);
 			_frame.changePanel(login.create());
 		}

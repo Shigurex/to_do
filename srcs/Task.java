@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Task extends BasePage {
