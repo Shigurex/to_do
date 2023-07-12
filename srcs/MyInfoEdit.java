@@ -91,7 +91,7 @@ public class MyInfoEdit extends BasePage {
 					check_mail = true;
 				else {
 					email_error.setText("This email has already used");
-				check_mail = false;
+					check_mail = false;
 				}
 			}
 			return (check_mail);
