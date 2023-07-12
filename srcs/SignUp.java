@@ -77,7 +77,7 @@ public class SignUp extends BasePage {
 		}
 	}
 
-	public Component createPage() {
+	public BasePanel createPage() {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 

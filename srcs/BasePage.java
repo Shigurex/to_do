@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.awt.event.*;
 
 abstract public class BasePage {
@@ -13,5 +12,5 @@ abstract public class BasePage {
 		public abstract void actionPerformed(ActionEvent e);
 	}
 
-	public abstract Component createPage();
+	public abstract BasePanel createPage();
 }

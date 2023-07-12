@@ -27,7 +27,7 @@ public class MyInfoEdit extends BasePage {
 		}
 	}
 
-	public Component createPage() {
+	public BasePanel createPage() {
 		BasePanel panel = new BasePanel(this._frame);
 		panel.setLayout(null);
 

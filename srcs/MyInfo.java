@@ -27,8 +27,9 @@ public class MyInfo extends BasePage {
 		}
 	}
 
-	public Component createPage() {
+	public BasePanel createPage() {
 		BasePanel panel = new BasePanel(this._frame);
+		panel.is_menu = true;
 		panel.setLayout(null);
 
 		JLabel label = panel.createLabel("My Information", 0.4, 0.1, 0.2, 0.05);

@@ -1,21 +1,21 @@
 import javax.swing.*;
 
 public class BasePanel extends JPanel {
+	private BaseFrame _frame;
 	protected String _title;
 	protected int _win_width;
 	protected int _win_height;
+	public boolean is_menu;
 
 	public BasePanel(BaseFrame frame) {
+		this._frame = frame;
 		this._title = frame.getTitle();
 		this._win_width = frame.getWinWidth();
 		this._win_height = frame.getWinHeight();
+		this.is_menu = false;
 	}
 
-	public BasePanel(String title, int win_width, int win_height) {
-		this._title = title;
-		this._win_width = win_width;
-		this._win_height = win_height;
-	}
+	public BaseFrame getFrame() { return (this._frame); }
 
 	public int convertAbsToRelValue(int abs_value, double rate) {
 		int rel_value = (int)(abs_value * rate);

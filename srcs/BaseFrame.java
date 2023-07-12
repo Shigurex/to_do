@@ -24,9 +24,13 @@ public class BaseFrame extends JFrame {
 	public int getWinWidth() { return (this._win_width); }
 	public int getWinHeight() { return (this._win_height); }
 
-	public void changePanel(Component content) {
+	public void changePanel(BasePanel content) {
 		getContentPane().removeAll();
 		super.add(content);
+		if (content.is_menu) {
+			BasePage menu = new Menu(content.getFrame());
+			super.add(menu.createPage(), BorderLayout.PAGE_START);
+		}
 		validate();
 		repaint();
 	}

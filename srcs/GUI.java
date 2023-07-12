@@ -1,5 +1,3 @@
-import java.awt.*;
-
 public class GUI {
 	private static final String _title = "ToDo";
 	private static final int _win_width = 900;
@@ -9,7 +7,7 @@ public class GUI {
 		SQL.getLog();
 		BaseFrame frame = new BaseFrame(GUI._title, GUI._win_width, GUI._win_height);
 		BasePage page = new Start(frame);
-		Component component = page.createPage();
+		BasePanel component = page.createPage();
 		frame.changePanel(component);
 		frame.setVisible(true);
 	}
