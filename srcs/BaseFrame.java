@@ -5,6 +5,7 @@ public class BaseFrame extends JFrame {
 	private String _title;
 	private int _win_width;
 	private int _win_height;
+	private String login_id;
 
 	public BaseFrame(String title, int width, int height) {
 		super(title);
@@ -23,6 +24,8 @@ public class BaseFrame extends JFrame {
 	public String getTitle() { return (this._title); }
 	public int getWinWidth() { return (this._win_width); }
 	public int getWinHeight() { return (this._win_height); }
+	public void setLoginId(String id) { this.login_id = id; }
+	public String getLoginId() { return (this.login_id); }
 
 	public void changePanel(BasePanel content) {
 		getContentPane().removeAll();

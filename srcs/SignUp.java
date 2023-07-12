@@ -20,7 +20,7 @@ public class SignUp extends BasePage {
 
 			if (cmd.equals("Register"))
 				page = checkSignUp();
-			else if (cmd.equals("Already Registered"))
+			else if (cmd.equals("Back to Login"))
 				page = new Login(SignUp.this);
 			else
 				page = new Error(SignUp.this);
@@ -111,11 +111,11 @@ public class SignUp extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Register", 0.2, 0.8, 0.2, 0.1);
+		JButton button = panel.createButton("Back to Login", 0.2, 0.8, 0.2, 0.1);
 		button.addActionListener(action);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Already Registered", 0.5, 0.8, 0.2, 0.1);
+		JButton button2 = panel.createButton("Register", 0.5, 0.8, 0.2, 0.1);
 		button2.addActionListener(action);
 		panel.add(button2);
 

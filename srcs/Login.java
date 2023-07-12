@@ -1,12 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Login extends BasePage {
 	private JTextField username_field;
 	private JPasswordField password_field;
 	private JLabel username_error;
 	private JLabel password_error;
+	private JLabel flash_message;
 
 	public Login(BasePage page) { super(page); }
 	public Login(BaseFrame frame) { super(frame); }
@@ -16,13 +18,12 @@ public class Login extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.equals("Back SignUp"))
+			if (cmd.equals("Go to SignUp"))
 				page = new SignUp(Login.this);
 			else if (cmd.equals("Login"))
 				page = checkLogin();
 			else
 				page = new Error(Login.this);
-
 			if (page != null)
 				Login.this._frame.changePanel(page.createPage());
 		}
@@ -35,9 +36,16 @@ public class Login extends BasePage {
 			if (!isValid(username, password))
 				return (null);
 			else if (SQL.checkUser(username, password) == true)
-				return (new MyInfo(Login.this, username));
+			{
+				this.setMemberId(username);
+				return (new MyInfo(Login.this));
+			}
 			else
-				return (new Error(Login.this));
+			{
+				flash_message.setText("Wrong username or password!");
+				flash_message.setForeground(Color.RED);
+				return (null);
+			}
 		}
 
 		public boolean isValid(String username, String password) {
@@ -60,8 +68,17 @@ public class Login extends BasePage {
 		}
 
 		public void resetNamePass() {
+			flash_message.setText("");
 			username_field.setText("");
 			password_field.setText("");
+		}
+
+		public void setMemberId(String username) {
+			ArrayList<ArrayList<String>> info = SQL.select("select id from member where name=?", 1, username);
+			ArrayList<String> str_list = info.get(0);
+			String id = str_list.get(0);
+			System.out.println(id);
+			Login.this._frame.setLoginId(id);
 		}
 	}
 
@@ -69,6 +86,7 @@ public class Login extends BasePage {
 		BasePanel panel = new BasePanel(this._frame);
 		panel.setLayout(null);
 
+		flash_message = panel.createLabel("",0.4, 0.05, 0.2, 0.05);
 		JLabel label = panel.createLabel("Login", 0.45, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 
@@ -91,7 +109,7 @@ public class Login extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Back SignUp", 0.2, 0.8, 0.2, 0.1);
+		JButton button = panel.createButton("Go to SignUp", 0.2, 0.8, 0.2, 0.1);
 		button.addActionListener(action);
 		panel.add(button);
 

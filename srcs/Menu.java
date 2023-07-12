@@ -11,8 +11,8 @@ public class Menu extends BasePage {
 
 			if (cmd.equals("My Info"))
 				page = new MyInfo(Menu.this);
-			else if (cmd.equals("My List"))
-				;
+			else if (cmd.equals("My Task"))
+				page = new Task(Menu.this);
 			else if (cmd.equals("Users"))
 				page = new Users(Menu.this);
 			else if (cmd.equals("Logout"))
@@ -31,7 +31,7 @@ public class Menu extends BasePage {
 		BasePanel panel = new BasePanel(_frame);
 
 		Action action = new Action();
-	
+
 		JButton button = new JButton("My Info");
 		button.addActionListener(action);
 		panel.add(button);

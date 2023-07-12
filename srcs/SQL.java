@@ -50,7 +50,9 @@ public class SQL {
 		}
 	}
 
-	public static ArrayList<ArrayList<String>>	select(String statement, int elements) {
+
+
+	public static ArrayList<ArrayList<String>>	select(String statement, int elements, String... s) {
 		Connection conn = null;
 		ArrayList<ArrayList<String>> result = null;
 		try {
@@ -58,6 +60,9 @@ public class SQL {
 			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
 
 			PreparedStatement ps = conn.prepareStatement(statement);
+			int index = 0;
+			for (String str : s)
+				ps.setString(++index, str);
 			ResultSet rs = ps.executeQuery();
 			result = new ArrayList<ArrayList<String>>();
 			while( rs.next() ) {

@@ -13,7 +13,7 @@ public class Start extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Start"))
-				page = new SignUp(Start.this);
+				page = new Login(Start.this);
 			else
 				page = new Error(Start.this);
 
