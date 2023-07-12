@@ -58,4 +58,14 @@ public class BasePanel extends JPanel {
 			convertAbsToRelValue(this._win_height, height));
 		return (password_field);
 	}
+
+	public JRadioButton createRadioButton(String name, boolean selected, double x, double y, double width, double height) {
+		JRadioButton radio = new JRadioButton(name, selected);
+		radio.setBounds(convertAbsToRelValue(this._win_width, x),
+			convertAbsToRelValue(this._win_height, y),
+			convertAbsToRelValue(this._win_width, width),
+			convertAbsToRelValue(this._win_height, height));
+		radio.setActionCommand(name);
+		return (radio);
+	}
 }

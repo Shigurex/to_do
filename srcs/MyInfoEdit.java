@@ -12,6 +12,7 @@ public class MyInfoEdit extends BasePage {
 	private JLabel flash_message;
 	private String username;
 	private String email;
+	ButtonGroup bgroup;
 
 	public MyInfoEdit(BasePage page) { super(page); }
 	public MyInfoEdit(BaseFrame frame) { super(frame); }
@@ -35,6 +36,7 @@ public class MyInfoEdit extends BasePage {
 		public BasePage checkEdit() {
 			String email = email_field.getText();
 			String password = new String(password_field.getPassword());
+			String is_public = bgroup.getSelection().getActionCommand();
 			resetAllField();
 
 			if (!isValid(email, password))
@@ -46,6 +48,7 @@ public class MyInfoEdit extends BasePage {
 			else {
 				String id = MyInfoEdit.this._frame.getLoginId();
 				updateEmail(email, id);
+				updateIsPublic(is_public, id);
 				return (new MyInfo(MyInfoEdit.this, "User update!"));
 			}
 		}
@@ -53,6 +56,13 @@ public class MyInfoEdit extends BasePage {
 
 		public static void updateEmail(String email, String id) {
 			SQL.update("update member set email = ? where id = ?", email, id);
+		}
+
+		public static void updateIsPublic(String is_public, String id) {
+			if (is_public.equals("Public"))
+				SQL.update("update member set is_public = ? where id = ?", "1", id);
+			else
+				SQL.update("update member set is_public = ? where id = ?", "0", id);
 		}
 
 		public boolean checkPass(String password) {
@@ -68,16 +78,23 @@ public class MyInfoEdit extends BasePage {
 		}
 
 		public boolean checkDuplication(String email) {
-			boolean check = true;
+			String id;
+			boolean check_mail = true;
 
-			ArrayList<ArrayList<String>> info = SQL.select("SELECT * FROM member WHERE email=?", 1, email);
+			ArrayList<ArrayList<String>> info = SQL.select("SELECT id FROM member WHERE email=?", 1, email);
 			if (info.size() == 0)
-				check = true;
+				check_mail = true;
 			else {
-				email_error.setText("This email has already used");
-				check = false;
+				ArrayList<String> str_list = info.get(0);
+				id = str_list.get(0);
+				if (id.equals(MyInfoEdit.this._frame.getLoginId()))
+					check_mail = true;
+				else {
+					email_error.setText("This email has already used");
+				check_mail = false;
+				}
 			}
-			return (check);
+			return (check_mail);
 		}
 
 		public boolean isValid(String email, String password) {
@@ -136,6 +153,14 @@ public class MyInfoEdit extends BasePage {
 		password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
 		password_error.setForeground(Color.RED);
 
+
+		JRadioButton radio1 = panel.createRadioButton("Public", true, 0.2, 0.5, 0.2, 0.05);
+		JRadioButton radio2 = panel.createRadioButton("Private", false, 0.5, 0.5, 0.2, 0.05);
+
+		bgroup = new ButtonGroup();
+		bgroup.add(radio1);
+		bgroup.add(radio2);
+
 		panel.add(label);
 		panel.add(flash_message);
 		panel.add(username_label);
@@ -146,6 +171,8 @@ public class MyInfoEdit extends BasePage {
 		panel.add(password_label);
 		panel.add(password_error);
 		panel.add(password_field);
+		panel.add(radio1);
+		panel.add(radio2);
 
 		Action action = new Action();
 

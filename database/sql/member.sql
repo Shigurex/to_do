@@ -3,11 +3,12 @@ CREATE TABLE member (
 	id INTEGER PRIMARY KEY,
 	name TEXT,
 	email TEXT,
-	password TEXT
+	password TEXT,
+	is_public BOOLEAN
 );
 
-INSERT INTO member (name, email, password) VALUES ('admin', 'admin@admin.com', 'admin');
-INSERT INTO member (name, email, password) VALUES ('hara', 'hara@gmail.com', 'hara');
-INSERT INTO member (name, email, password) VALUES ('hokari', 'hokari@gmail.com', 'hokari');
-INSERT INTO member (name, email, password) VALUES ('morisaki', 'morisaki@gmail.com', 'morisaki');
-INSERT INTO member (name, email, password) VALUES ('matsushima', 'matsushima@gmail.com', 'matsushima');
+INSERT INTO member (name, email, password, is_public) VALUES ('admin', 'admin@admin.com', 'admin', false);
+INSERT INTO member (name, email, password, is_public) VALUES ('hara', 'hara@gmail.com', 'hara', true);
+INSERT INTO member (name, email, password, is_public) VALUES ('hokari', 'hokari@gmail.com', 'hokari', true);
+INSERT INTO member (name, email, password, is_public) VALUES ('morisaki', 'morisaki@gmail.com', 'morisaki', true);
+INSERT INTO member (name, email, password, is_public) VALUES ('matsushima', 'matsushima@gmail.com', 'matsushima', true);

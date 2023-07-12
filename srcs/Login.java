@@ -122,11 +122,11 @@ public class Login extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Go to SignUp", 0.2, 0.8, 0.2, 0.1);
+		JButton button = panel.createButton("Login", 0.3, 0.6, 0.4, 0.05);
 		button.addActionListener(action);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Login", 0.5, 0.8, 0.2, 0.1);
+		JButton button2 = panel.createButton("Go to SignUp", 0.3, 0.7, 0.4, 0.05);
 		button2.addActionListener(action);
 		panel.add(button2);
 

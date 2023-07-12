@@ -7,9 +7,11 @@ public class SignUp extends BasePage {
 	private JTextField username_field;
 	private JTextField email_field;
 	private JPasswordField password_field;
+	private JPasswordField confirm_field;
 	private JLabel username_error;
 	private JLabel email_error;
 	private JLabel password_error;
+	private JLabel confirm_error;
 	private JLabel flash_message;
 
 	public SignUp(BasePage page) { super(page); }
@@ -39,9 +41,10 @@ public class SignUp extends BasePage {
 			String username = username_field.getText();
 			String email = email_field.getText();
 			String password = new String(password_field.getPassword());
+			String confirm = new String(confirm_field.getPassword());
 			resetAllField();
 
-			if (!isValid(username, email, password))
+			if (!isValid(username, email, password, confirm))
 				return (null);
 			if (!checkDuplication(username, email)) {
 				return (null);
@@ -53,26 +56,27 @@ public class SignUp extends BasePage {
 		}
 
 		public boolean checkDuplication(String username, String email) {
-			boolean check = true;
+			boolean check_name = true;
+			boolean check_email = true;
 
 			ArrayList<ArrayList<String>> info = SQL.select("SELECT * FROM member WHERE name=?", 1, username);
 			if (info.size() == 0)
-				check = true;
+				check_name = true;
 			else {
 				username_error.setText("This username has already used");
-				check = false;
+				check_name = false;
 			}
 			info = SQL.select("SELECT * FROM member WHERE email=?", 1, email);
 			if (info.size() == 0)
-				check = true;
+				check_email = true;
 			else {
 				email_error.setText("This email has already used");
-				check = false;
+				check_email = false;
 			}
-			return (check);
+			return (check_email && check_name);
 		}
 
-		public boolean isValid(String username, String email, String password) {
+		public boolean isValid(String username, String email, String password, String confirm) {
 			boolean is_valid = true;
 			if (username.equals("")) {
 				username_error.setText("Please input username");
@@ -92,6 +96,16 @@ public class SignUp extends BasePage {
 			}
 			else
 				password_error.setText("");
+			if (confirm.equals("")) {
+				confirm_error.setText("Please input confirm password");
+				is_valid = false;
+			}
+			else
+				confirm_error.setText("");
+			if (!confirm.equals(password)) {
+				is_valid = false;
+				flash_message.setText("Confirm password is not equal to password!");
+			}
 			return (is_valid);
 		}
 
@@ -100,6 +114,7 @@ public class SignUp extends BasePage {
 			username_field.setText("");
 			email_field.setText("");
 			password_field.setText("");
+			confirm_field.setText("");
 		}
 	}
 
@@ -107,7 +122,8 @@ public class SignUp extends BasePage {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
-		flash_message = panel.createLabel("",0.4, 0.05, 0.2, 0.05);
+		flash_message = panel.createLabel("",0.35, 0.05, 0.3, 0.05);
+		flash_message.setForeground(Color.RED);
 		JLabel label = panel.createLabel("SignUp", 0.45, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
@@ -125,6 +141,11 @@ public class SignUp extends BasePage {
 		password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
 		password_error.setForeground(Color.RED);
 
+		JLabel confirm_label = panel.createLabel("confirm password: ", 0.05, 0.5, 0.15, 0.05);
+		confirm_field = panel.createPasswordField("", 0.2, 0.5, 0.6, 0.05);
+		confirm_error = panel.createLabel("", 0.2, 0.55, 0.5, 0.05);
+		confirm_error.setForeground(Color.RED);
+
 		panel.add(label);
 		panel.add(flash_message);
 		panel.add(username_label);
@@ -136,14 +157,17 @@ public class SignUp extends BasePage {
 		panel.add(password_label);
 		panel.add(password_error);
 		panel.add(password_field);
+		panel.add(confirm_label);
+		panel.add(confirm_error);
+		panel.add(confirm_field);
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Back to Login", 0.2, 0.8, 0.2, 0.1);
+		JButton button = panel.createButton("Register", 0.3, 0.7, 0.4, 0.05);
 		button.addActionListener(action);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Register", 0.5, 0.8, 0.2, 0.1);
+		JButton button2 = panel.createButton("Back to Login", 0.3, 0.8, 0.4, 0.05);
 		button2.addActionListener(action);
 		panel.add(button2);
 
