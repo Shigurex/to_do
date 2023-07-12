@@ -85,18 +85,15 @@ public class SignUp extends BasePage {
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
 		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
-		username_error = panel.createLabel("", 0.2, 0.25, 0.5,0.05);
-		username_error.setForeground(Color.RED);
+		JLabel username_error = panel.createLabel("", 0.2, 0.25, 0.5,0.05);
 
 		JLabel email_label = panel.createLabel("email: ", 0.05, 0.3, 0.15, 0.05);
 		email_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
-		email_error = panel.createLabel("", 0.2, 0.35, 0.5, 0.05);
-		email_error.setForeground(Color.RED);
+		JLabel email_error = panel.createLabel("", 0.2, 0.35, 0.5, 0.05);
 
 		JLabel password_label = panel.createLabel("password: ", 0.05, 0.4, 0.15, 0.05);
 		password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
-		password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
-		password_error.setForeground(Color.RED);
+		JLabel password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
 
 		panel.add(label);
 		panel.add(username_label);

@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 public class SQL {
 	private static String db_dir = "./database/";
 	private static String db_log_dir = "./database/log/";
-	private static String db_name = "test.db";
+	private static String db_name = "database.db";
 
 	public static void getLog() {
 		LocalDateTime currentLocalTime = LocalDateTime.now();
@@ -24,22 +24,18 @@ public class SQL {
 		}
 	}
 
-	public static void insertUser(String name, String email, String password) {
+	public static void insert(String statement, String... s) {
 		Connection conn = null;
-
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
-
-			String sql = "insert into user(name, email, password) VALUES(?,?,?)";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, name);
-			ps.setString(2, email);
-			ps.setString(3, password);
+			PreparedStatement ps = conn.prepareStatement(statement);
+			int index = 0;
+			for (String str : s)
+				ps.setString(++index, str);
 			ps.executeUpdate();
 			ps.close();
-			System.out.println("Insert " + name + " " + email + " " + password);
-
+			System.out.println("Insert done");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -50,6 +46,36 @@ public class SQL {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static void insertUser(String name, String email, String password) {
+
+		insert("insert into member (name, email, password) VALUES(?, ?, ?)", name, email, password);
+		//Connection conn = null;
+
+		//try {
+		//	Class.forName("org.sqlite.JDBC");
+		//	conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
+
+		//	String sql = "insert into user(name, email, password) VALUES(?,?,?)";
+		//	PreparedStatement ps = conn.prepareStatement(sql);
+		//	ps.setString(1, name);
+		//	ps.setString(2, email);
+		//	ps.setString(3, password);
+		//	ps.executeUpdate();
+		//	ps.close();
+		//	System.out.println("Insert " + name + " " + email + " " + password);
+
+		//} catch (Exception e) {
+		//	e.printStackTrace();
+		//} finally {
+		//	try {
+		//		if (conn != null)
+		//			conn.close();
+		//	} catch (SQLException e) {
+		//		e.printStackTrace();
+		//	}
+		//}
 	}
 
 	public static boolean checkUser(String username, String input_password) {
