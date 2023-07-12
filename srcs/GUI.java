@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GUI {
 	private static final String _title = "ToDo";
 	private static final int _win_width = 900;
@@ -6,6 +8,13 @@ public class GUI {
 	public static void main(String[] args) {
 		//SQL.insert("INSERT INTO share (task, member, is_editable) VALUES (?, ?, ?);", String.valueOf(2), String.valueOf(2), String.valueOf(true ? 1 : 0));
 		//SQL.insert("INSERT INTO todo (task, title, deadline, create_time, update_time) VALUES (?, ?, ?, ?, ?);", String.valueOf(1), "java final report", "2023/07/23 23:50:00", "2023/07/23 23:50:00", "2023/07/23 23:50:00");
+		//ArrayList<ArrayList<String>> info = SQL.select("select name, password from member", 2);
+		//for (int i = 0; i < info.size(); i++) {
+		//	ArrayList<String> str_list = info.get(i);
+		//	for (int j = 0; j < str_list.size(); j++)
+		//		System.out.println(str_list.get(j));
+		//}
+
 		SQL.getLog();
 		BaseFrame frame = new BaseFrame(GUI._title, GUI._win_width, GUI._win_height);
 		BasePage page = new Start(frame);

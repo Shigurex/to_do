@@ -1,8 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.sql.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

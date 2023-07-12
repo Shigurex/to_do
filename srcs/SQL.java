@@ -50,6 +50,36 @@ public class SQL {
 		}
 	}
 
+	public static ArrayList<ArrayList<String>>	select(String statement, int elements) {
+		Connection conn = null;
+		ArrayList<ArrayList<String>> result = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
+
+			PreparedStatement ps = conn.prepareStatement(statement);
+			ResultSet rs = ps.executeQuery();
+			result = new ArrayList<ArrayList<String>>();
+			while( rs.next() ) {
+				ArrayList<String> value = new ArrayList<String>();
+				for (int i = 1; i <= elements; i++)
+					value.add(rs.getString(i));
+				result.add(value);
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return (result);
+	}
+
 	public static void insertUser(String name, String email, String password) {
 
 		insert("insert into member (name, email, password) VALUES(?, ?, ?)", name, email, password);
@@ -129,11 +159,11 @@ public class SQL {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			all_user = new ArrayList<UserData>();
-            while( rs.next() ) {
-                UserData data = new UserData();
-                data.setUsername(rs.getString(1));
-                all_user.add(data);
-            }
+			while( rs.next() ) {
+				UserData data = new UserData();
+				data.setUsername(rs.getString(1));
+				all_user.add(data);
+			}
 			conn.close();
 			return (all_user);
 		} catch (Exception e) {
