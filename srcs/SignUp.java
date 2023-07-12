@@ -31,6 +31,10 @@ public class SignUp extends BasePage {
 				SignUp.this._frame.changePanel(page.createPage());
 		}
 
+		public static void insertUser(String name, String email, String password) {
+			SQL.insert("insert into member (name, email, password) VALUES(?, ?, ?)", name, email, password);
+		}
+
 		public BasePage checkSignUp() {
 			String username = username_field.getText();
 			String email = email_field.getText();
@@ -43,7 +47,7 @@ public class SignUp extends BasePage {
 				return (null);
 			}
 			else {
-				SQL.insertUser(username, email, password);
+				insertUser(username, email, password);
 				return (new Login(SignUp.this, "User create!"));
 			}
 		}

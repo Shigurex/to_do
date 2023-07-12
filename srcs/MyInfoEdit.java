@@ -45,9 +45,14 @@ public class MyInfoEdit extends BasePage {
 				return (null);
 			else {
 				String id = MyInfoEdit.this._frame.getLoginId();
-				SQL.updateEmail(email, id);
+				updateEmail(email, id);
 				return (new MyInfo(MyInfoEdit.this, "User update!"));
 			}
+		}
+
+
+		public static void updateEmail(String email, String id) {
+			SQL.update("update member set email = ? where id = ?", email, id);
 		}
 
 		public boolean checkPass(String password) {

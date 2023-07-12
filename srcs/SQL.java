@@ -81,8 +81,7 @@ public class SQL {
 		}
 		return (result);
 	}
-
-	public static void update(String statement, String... s) {
+		public static void update(String statement, String... s) {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -104,13 +103,5 @@ public class SQL {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public static void insertUser(String name, String email, String password) {
-		insert("insert into member (name, email, password) VALUES(?, ?, ?)", name, email, password);
-	}
-
-	public static void updateEmail(String email, String id) {
-		update("update member set email = ? where id = ?", email, id);
 	}
 }
