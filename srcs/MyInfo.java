@@ -6,8 +6,13 @@ import java.util.ArrayList;
 public class MyInfo extends BasePage {
 	private String username;
 	private String email;
+	private String message="";
 
 	public MyInfo(BasePage page) { super(page); }
+	public MyInfo(BasePage page, String message) {
+		super(page);
+		this.message = message;
+	}
 	public MyInfo(BaseFrame frame) { super(frame); }
 
 	public class Action implements ActionListener {
@@ -39,17 +44,19 @@ public class MyInfo extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(null);
 		this.setMyInfo();
-		
+
+		JLabel flash_message = panel.createLabel(this.message,0.4, 0.05, 0.2, 0.05);
 		JLabel label = panel.createLabel("My Information", 0.4, 0.1, 0.2, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		JLabel username_label = panel.createLabel("Username: " + this.username, 0.3, 0.2, 0.15, 0.05);
-		JLabel email_label = panel.createLabel("email: " + this.email, 0.3, 0.3, 0.15, 0.05);
+		JLabel email_label = panel.createLabel("email: " + this.email, 0.3, 0.3, 0.3, 0.05);
 
+		panel.add(flash_message);
 		panel.add(label);
 		panel.add(username_label);
 		panel.add(email_label);
 
-		JButton button = panel.createButton("Go to Edit", 0.4, 0.6, 0.1, 0.05);
+		JButton button = panel.createButton("Go to Edit", 0.4, 0.6, 0.2, 0.05);
 		Action action = new Action();
 		button.addActionListener(action);
 		panel.add(button);

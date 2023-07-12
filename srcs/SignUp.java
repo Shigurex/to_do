@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class SignUp extends BasePage {
 	private JTextField username_field;
@@ -9,6 +10,7 @@ public class SignUp extends BasePage {
 	private JLabel username_error;
 	private JLabel email_error;
 	private JLabel password_error;
+	private JLabel flash_message;
 
 	public SignUp(BasePage page) { super(page); }
 	public SignUp(BaseFrame frame) { super(frame); }
@@ -37,31 +39,50 @@ public class SignUp extends BasePage {
 
 			if (!isValid(username, email, password))
 				return (null);
-			else
-			{
-				SQL.insertUser(username, email, password);
-				return (new Login(SignUp.this));
+			if (!checkDuplication(username, email)) {
+				return (null);
 			}
+			else {
+				SQL.insertUser(username, email, password);
+				return (new Login(SignUp.this, "User create!"));
+			}
+		}
+
+		public boolean checkDuplication(String username, String email) {
+			boolean check = true;
+
+			ArrayList<ArrayList<String>> info = SQL.select("SELECT * FROM member WHERE name=?", 1, username);
+			if (info.size() == 0)
+				check = true;
+			else {
+				username_error.setText("This username has already used");
+				check = false;
+			}
+			info = SQL.select("SELECT * FROM member WHERE email=?", 1, email);
+			if (info.size() == 0)
+				check = true;
+			else {
+				email_error.setText("This email has already used");
+				check = false;
+			}
+			return (check);
 		}
 
 		public boolean isValid(String username, String email, String password) {
 			boolean is_valid = true;
-			if (username.equals(""))
-			{
+			if (username.equals("")) {
 				username_error.setText("Please input username");
 				is_valid = false;
 			}
 			else
 				username_error.setText("");
-			if (email.equals(""))
-			{
-				email_error.setText("Please input username");
+			if (email.equals("")) {
+				email_error.setText("Please input email");
 				is_valid = false;
 			}
 			else
 				email_error.setText("");
-			if (password.equals(""))
-			{
+			if (password.equals("")) {
 				password_error.setText("Please input password");
 				is_valid = false;
 			}
@@ -71,6 +92,7 @@ public class SignUp extends BasePage {
 		}
 
 		public void resetAllField() {
+			flash_message.setText("");
 			username_field.setText("");
 			email_field.setText("");
 			password_field.setText("");
@@ -81,6 +103,7 @@ public class SignUp extends BasePage {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
+		flash_message = panel.createLabel("",0.4, 0.05, 0.2, 0.05);
 		JLabel label = panel.createLabel("SignUp", 0.45, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
@@ -99,6 +122,7 @@ public class SignUp extends BasePage {
 		password_error.setForeground(Color.RED);
 
 		panel.add(label);
+		panel.add(flash_message);
 		panel.add(username_label);
 		panel.add(username_error);
 		panel.add(username_field);
