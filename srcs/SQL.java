@@ -3,6 +3,8 @@ import java.nio.file.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQL {
 	private static String db_dir = "./database/";
@@ -114,4 +116,37 @@ public class SQL {
 			return (check);
 		}
 	}
+
+
+	public static List<UserData> getAllUser() {
+		Connection conn = null;
+		List<UserData> all_user = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
+
+			String sql = "select namefrom member";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			all_user = new ArrayList<UserData>();
+            while( rs.next() ) {
+                UserData data = new UserData();
+                data.setUsername(rs.getString(1));
+                all_user.add(data);
+            }
+			conn.close();
+			return (all_user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return (all_user);
+		}
+	}
+
 }
