@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Task extends BasePage {
@@ -10,6 +12,15 @@ public class Task extends BasePage {
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
+
+			if (cmd.startsWith("task_")) {
+				int task_id = Integer.valueOf(cmd.substring(5));
+				page = new ToDo(Task.this, task_id);
+			} else
+				page = new Error(Task.this);
+
+			if (page != null)
+				Task.this._frame.changePanel(page.createPage());
 		}
 	}
 
@@ -21,6 +32,19 @@ public class Task extends BasePage {
 		JLabel label = panel.createLabel("Task", 0.45, 0.1, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		panel.add(label);
+
+		Action action = new Action();
+
+		ArrayList<ArrayList<String>> info = SQL.select("select ta.id, ta.name from member m, task ta where ta.owner=m.id and m.id=?;", 2, String.valueOf(this._frame.getLoginId()));
+		for (int i = 0; i < info.size(); i++) {
+			ArrayList<String> str_list = info.get(i);
+			String task_id = str_list.get(0);
+			String task_name = str_list.get(1);
+			JButton task_button = panel.createButton(task_name, 0.2, 0.2 + i * 0.05, 0.6, 0.05);
+			task_button.setActionCommand("task_" + task_id);
+			task_button.addActionListener(action);
+			panel.add(task_button);
+		}
 
 		return (panel);
 	}

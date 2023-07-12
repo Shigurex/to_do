@@ -36,8 +36,7 @@ public class Menu extends BasePage {
 		button.addActionListener(action);
 		panel.add(button);
 
-		// JButton button2 = panel.createButton("test2", 0.2, 0.8, 0.1, 0.1);
-		JButton button2 = new JButton("My List");
+		JButton button2 = new JButton("My Task");
 		button2.addActionListener(action);
 		panel.add(button2);
 
