@@ -81,4 +81,27 @@ public class SQL {
 		}
 		return (result);
 	}
+		public static void update(String statement, String... s) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
+			PreparedStatement ps = conn.prepareStatement(statement);
+			int index = 0;
+			for (String str : s)
+				ps.setString(++index, str);
+			ps.executeUpdate();
+			ps.close();
+			System.out.println("Update done");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -9,8 +9,13 @@ public class Login extends BasePage {
 	private JLabel username_error;
 	private JLabel password_error;
 	private JLabel flash_message;
+	private String message = "";
 
 	public Login(BasePage page) { super(page); }
+	public Login(BasePage page, String message) {
+		super(page);
+		this.message = message;
+	}
 	public Login(BaseFrame frame) { super(frame); }
 
 	public class Action implements ActionListener {
@@ -35,13 +40,11 @@ public class Login extends BasePage {
 
 			if (!isValid(username, password))
 				return (null);
-			else if (checkUser(username, password) == true)
-			{
+			else if (checkUser(username, password)) {
 				this.setMemberId(username);
 				return (new MyInfo(Login.this));
 			}
-			else
-			{
+			else {
 				flash_message.setText("Wrong username or password!");
 				flash_message.setForeground(Color.RED);
 				return (null);
@@ -61,15 +64,13 @@ public class Login extends BasePage {
 
 		public boolean isValid(String username, String password) {
 			boolean is_valid = true;
-			if (username.equals(""))
-			{
+			if (username.equals("")) {
 				username_error.setText("Please input username");
 				is_valid = false;
 			}
 			else
 				username_error.setText("");
-			if (password.equals(""))
-			{
+			if (password.equals("")) {
 				password_error.setText("Please input password");
 				is_valid = false;
 			}
@@ -96,7 +97,8 @@ public class Login extends BasePage {
 		BasePanel panel = new BasePanel(this._frame);
 		panel.setLayout(null);
 
-		flash_message = panel.createLabel("",0.4, 0.05, 0.2, 0.05);
+		flash_message = panel.createLabel(this.message,0.45, 0.05, 0.2, 0.05);
+		flash_message.setForeground(Color.GREEN);
 		JLabel label = panel.createLabel("Login", 0.45, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 
