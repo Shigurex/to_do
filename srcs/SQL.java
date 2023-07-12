@@ -87,7 +87,7 @@ public class SQL {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
 
-			String sql = "SELECT password FROM user WHERE name=?";
+			String sql = "SELECT password FROM member WHERE name=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
@@ -125,7 +125,7 @@ public class SQL {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
 
-			String sql = "select namefrom member";
+			String sql = "select name from member";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			all_user = new ArrayList<UserData>();
