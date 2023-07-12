@@ -11,12 +11,12 @@ public class Start extends BasePage {
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
-			
+
 			if (cmd.equals("Start"))
-				page = new Login(Start.this);
+				page = new SignUp(Start.this);
 			else
 				page = new Error(Start.this);
-			
+
 			if (page != null)
 				Start.this._frame.changePanel(page.createPage());
 		}

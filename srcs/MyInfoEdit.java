@@ -29,6 +29,7 @@ public class MyInfoEdit extends BasePage {
 
 	public BasePanel createPage() {
 		BasePanel panel = new BasePanel(this._frame);
+		panel.is_menu = true;
 		panel.setLayout(null);
 
 		JLabel label = panel.createLabel("My Information Edit", 0.4, 0.1, 0.3, 0.05);
