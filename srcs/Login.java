@@ -35,7 +35,7 @@ public class Login extends BasePage {
 
 			if (!isValid(username, password))
 				return (null);
-			else if (SQL.checkUser(username, password) == true)
+			else if (checkUser(username, password) == true)
 			{
 				this.setMemberId(username);
 				return (new MyInfo(Login.this));
@@ -46,6 +46,17 @@ public class Login extends BasePage {
 				flash_message.setForeground(Color.RED);
 				return (null);
 			}
+		}
+
+		public boolean checkUser(String username, String password) {
+			ArrayList<ArrayList<String>> info = SQL.select("SELECT password FROM member WHERE name=?", 1, username);
+			if (info.size() == 0)
+				return (false);
+			ArrayList<String> str_list = info.get(0);
+			if (password.equals(str_list.get(0)))
+				return (true);
+			else
+				return (false);
 		}
 
 		public boolean isValid(String username, String password) {
@@ -77,7 +88,6 @@ public class Login extends BasePage {
 			ArrayList<ArrayList<String>> info = SQL.select("select id from member where name=?", 1, username);
 			ArrayList<String> str_list = info.get(0);
 			String id = str_list.get(0);
-			System.out.println(id);
 			Login.this._frame.setLoginId(id);
 		}
 	}
@@ -99,6 +109,7 @@ public class Login extends BasePage {
 		password_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
 		password_error.setForeground(Color.RED);
 
+		panel.add(flash_message);
 		panel.add(label);
 		panel.add(username_label);
 		panel.add(username_field);
