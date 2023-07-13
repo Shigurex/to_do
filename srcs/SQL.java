@@ -138,4 +138,28 @@ public class SQL {
 			}
 		}
 	}
+
+	public static void delete(String statement, String... s) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
+			PreparedStatement ps = conn.prepareStatement(statement);
+			int index = 0;
+			for (String str : s)
+				ps.setString(++index, str);
+			ps.executeUpdate();
+			ps.close();
+			System.out.println("Delete done");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
