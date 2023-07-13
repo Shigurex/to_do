@@ -1,10 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class ToDoAdd extends BasePage {
+	private int _task_id;
 	private JTextField _title_field;
 	private JLabel _title_error;
 	private JTextField _deadline_field;
@@ -12,6 +16,10 @@ public class ToDoAdd extends BasePage {
 
 	public ToDoAdd(BasePage page) { super(page); }
 	public ToDoAdd(BaseFrame frame) { super(frame); }
+	public ToDoAdd(BasePage page, int task_id) {
+		super(page);
+		this._task_id = task_id;
+	}
 
 	public class Action implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -32,13 +40,17 @@ public class ToDoAdd extends BasePage {
 			String deadline = _deadline_field.getText();
 			if (!isValid(title, deadline))
 				return (null);
-			//addToDo(title, deadline, false, false);
-			return (new Task(ToDoAdd.this));
+			addToDo(title, deadline);
+			return (new ToDo(ToDoAdd.this, _task_id));
 		}
 
-		//public void addToDo(String name, String description, boolean is_public, boolean is_archive) {
-		//	SQL.insert("insert into task (owner, name, description, is_public, is_archive) VALUES(?, ?, ?, ?, ?)", String.valueOf(TaskAdd.this._frame.getLoginId()), name, description, is_public ? "1" : "0", is_archive ? "1" : "0");
-		//}
+		public void addToDo(String title, String deadline) {
+			LocalDateTime time_now = LocalDateTime.now();
+			DateTimeFormatter time_format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			String create_time = time_format.format(time_now);
+			String update_time = time_format.format(time_now);
+			SQL.insert("insert into todo (task, title, deadline, create_time, update_time, is_done) VALUES(?, ?, ?, ?, ?, ?)", String.valueOf(_task_id), title, deadline, create_time, update_time, "0");
+		}
 
 		public boolean isValid(String name, String description) {
 			boolean is_valid = true;

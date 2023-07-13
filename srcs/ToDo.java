@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -17,16 +19,16 @@ public class ToDo extends BasePage {
 
 	public class Action implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//String cmd = e.getActionCommand();
-			//BasePage page = null;
+			String cmd = e.getActionCommand();
+			BasePage page = null;
 
-			//if (cmd.startsWith("task_"))
-			//	page = new ToDo(Task.this);
-			//else
-			//	page = new Error(Task.this);
+			if (cmd.equals("Add ToDo"))
+				page = new ToDoAdd(ToDo.this, _task_id);
+			else
+				page = new Error(ToDo.this);
 
-			//if (page != null)
-			//	Task.this._frame.changePanel(page.createPage());
+			if (page != null)
+				ToDo.this._frame.changePanel(page.createPage());
 		}
 	}
 
@@ -48,7 +50,7 @@ public class ToDo extends BasePage {
 		JTable table = panel.createTable(model, 0.1, 0.2, 0.8, 0.5);
 		panel.add(table);
 
-		ArrayList<ArrayList<String>> info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.is_done from task ta, todo td where td.task=ta.id and ta.id=?;", 5, String.valueOf(this._task_id));
+		ArrayList<ArrayList<String>> info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.is_done from task ta, todo td where td.task=ta.id and ta.id=? order by td.is_done asc, td.deadline asc;", 5, String.valueOf(this._task_id));
 		for (int i = 0; i < info.size(); i++) {
 			ArrayList<String> str_list = info.get(i);
 			String todo_title = str_list.get(0);
@@ -59,6 +61,12 @@ public class ToDo extends BasePage {
 			Object[] content = {todo_title, todo_deadline, todo_create_time, todo_update_time, todo_is_done};
 			model.addRow(content);
 		}
+
+		Action action = new Action();
+
+		JButton todo_add_button = panel.createButton("Add ToDo", 0.2, 0.75, 0.2, 0.1);
+		todo_add_button.addActionListener(action);
+		panel.add(todo_add_button);
 
 		return (panel);
 	}
