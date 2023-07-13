@@ -1,3 +1,4 @@
-SQLite version 3.40.1 2022-12-28 14:03:47
-Enter ".help" for usage hints.
-sqlite> 
+.read sql/member.sql
+.read sql/task.sql
+.read sql/todo.sql
+.read sql/share.sql
