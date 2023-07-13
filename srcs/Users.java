@@ -31,8 +31,9 @@ public class Users extends BasePage {
 			System.out.println(username);
 		}
 
-		JLabel label = panel.createLabel("Users", 0.45, 0.1, 0.3, 0.05);
+		JLabel label = panel.createLabel("Users", 0.45, 0.1, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label);
 
 		return (panel);
