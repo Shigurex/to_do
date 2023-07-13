@@ -13,6 +13,7 @@ import javax.swing.table.TableColumn;
 public class ToDo extends BasePage {
 	private int task_id;
 	private JTable table;
+	TaskTableModel model;
 	ArrayList<ArrayList<String>> info;
 
 	public ToDo(BasePage page) { super(page); }
@@ -31,6 +32,8 @@ public class ToDo extends BasePage {
 				page = new ToDoAdd(ToDo.this, task_id);
 			else if (cmd.equals("Edit ToDo"))
 				page = getSelectedToDo();
+			else if (cmd.equals("Delete ToDo"))
+				page = deleteSelectedToDo();
 			else if (cmd.equals("Share"))
 				page = new Share(ToDo.this, task_id);
 			else
@@ -48,6 +51,20 @@ public class ToDo extends BasePage {
 			int todo_id = Integer.valueOf(str_list.get(6));
 			return (new ToDoEdit(ToDo.this, task_id, todo_id));
 		}
+
+		public BasePage deleteSelectedToDo() {
+			int[] selected_rows = table.getSelectedRows();
+			if (selected_rows.length == 0)
+				return (null);
+			for (int i = selected_rows.length - 1; i >= 0; i--) {
+				int selected_row = selected_rows[i];
+				ArrayList<String> str_list = info.get(selected_row);
+				int todo_id = Integer.valueOf(str_list.get(6));
+				System.out.println(selected_row + " " + todo_id);
+				SQL.delete("delete from todo where id = ?", String.valueOf(todo_id));
+			}
+			return (new ToDo(ToDo.this, task_id));
+		}
 	}
 
 	public BasePanel createPage() {
@@ -64,7 +81,7 @@ public class ToDo extends BasePage {
 		panel.add(label, BorderLayout.NORTH);
 
 		String[] columns = {"Title", "Deadline", "Create Time", "Update Time", "Priority", "Done"};
-		TaskTableModel model = new TaskTableModel(null, columns);
+		model = new TaskTableModel(null, columns);
 		table = panel.createTable(model, 0, 0.2, 1, 0.5);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -106,6 +123,10 @@ public class ToDo extends BasePage {
 		JButton todo_edit_button = panel.createButton("Edit ToDo", 0.2, 0.75, 0.2, 0.1);
 		todo_edit_button.addActionListener(action);
 		button_panel.add(todo_edit_button);
+
+		JButton todo_delete_button = panel.createButton("Delete ToDo", 0.2, 0.75, 0.2, 0.1);
+		todo_delete_button.addActionListener(action);
+		button_panel.add(todo_delete_button);
 
 		JButton share_button = panel.createButton("Share", 0.7, 0.1, 0.1, 0.05);
 		share_button.addActionListener(action);

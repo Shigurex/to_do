@@ -8,6 +8,8 @@ public class TaskTableModel extends DefaultTableModel {
 	}
 
 	public boolean isCellEditable(int row, int column) {
-		return false;
+		if (column == 5)
+			return (true);
+		return (false);
 	}
 }
