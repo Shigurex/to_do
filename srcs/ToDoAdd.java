@@ -1,18 +1,25 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 
 public class ToDoAdd extends BasePage {
 	private int _task_id;
 	private JTextField _title_field;
 	private JLabel _title_error;
-	private JTextField _deadline_field;
-	private JLabel _description_error;
+	private JSpinner _deadline_field;
+	private JLabel _deadline_error;
+	private ButtonGroup _bgroup;
 
 	public ToDoAdd(BasePage page) { super(page); }
 	public ToDoAdd(BaseFrame frame) { super(frame); }
@@ -26,8 +33,10 @@ public class ToDoAdd extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.equals("Create Button"))
+			if (cmd.equals("Create"))
 				page = checkField();
+			else if (cmd.equals("Back to ToDo"))
+				page = new ToDo(ToDoAdd.this, _task_id);
 			else
 				page = new Error(ToDoAdd.this);
 
@@ -37,10 +46,11 @@ public class ToDoAdd extends BasePage {
 
 		public BasePage checkField() {
 			String title = _title_field.getText();
-			String deadline = _deadline_field.getText();
+			String deadline = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(_deadline_field.getValue());
+			int priority = Integer.valueOf(_bgroup.getSelection().getActionCommand());
 			if (!isValid(title, deadline))
 				return (null);
-			addToDo(title, deadline, 5);
+			addToDo(title, deadline, priority);
 			return (new ToDo(ToDoAdd.this, _task_id));
 		}
 
@@ -52,20 +62,20 @@ public class ToDoAdd extends BasePage {
 			SQL.insert("insert into todo (task, title, deadline, create_time, update_time, priority, is_done) VALUES(?, ?, ?, ?, ?, ?, ?)", String.valueOf(_task_id), title, deadline, create_time, update_time, String.valueOf(priority), "0");
 		}
 
-		public boolean isValid(String name, String description) {
+		public boolean isValid(String title, String deadline) {
 			boolean is_valid = true;
-			if (name.equals("")) {
-				_title_error.setText("Please input task name");
+			if (title.equals("")) {
+				_title_error.setText("Please input title");
 				is_valid = false;
 			}
 			else
 				_title_error.setText("");
-			if (description.equals("")) {
-				_description_error.setText("Please input description");
+			if (deadline.equals(" ")) {
+				_deadline_error.setText("Please input deadline");
 				is_valid = false;
 			}
 			else
-				_description_error.setText("");
+				_deadline_error.setText("");
 			return (is_valid);
 		}
 	}
@@ -83,23 +93,54 @@ public class ToDoAdd extends BasePage {
 		this._title_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
 		this._title_error = panel.createLabel("",0.2, 0.25, 0.6, 0.05);
 		this._title_error.setForeground(Color.RED);
-		JLabel deadline_label = panel.createLabel("Deadline: ", 0.05, 0.3, 0.15, 0.05);
-		this._deadline_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
-		this._description_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
-		this._description_error.setForeground(Color.RED);
+
+		JLabel deadline_date_label = panel.createLabel("Deadline: ", 0.05, 0.3, 0.15, 0.05);
+
+		SpinnerDateModel model = new SpinnerDateModel();
+		_deadline_field = panel.createSpinner(model, 0.2, 0.3, 0.6, 0.05);
+		JComponent editor = new JSpinner.DateEditor(_deadline_field, "yyyy/MM/dd HH:mm:ss");
+		_deadline_field.setEditor(editor);
+
+		this._deadline_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
+		this._deadline_error.setForeground(Color.RED);
+
+		JLabel priority_label = panel.createLabel("Priority: ", 0.05, 0.4, 0.15, 0.05);
+		JRadioButton radio1 = panel.createRadioButton("1", false, 0.2, 0.4, 0.1, 0.05);
+		JRadioButton radio2 = panel.createRadioButton("2", false, 0.32, 0.4, 0.1, 0.05);
+		JRadioButton radio3 = panel.createRadioButton("3", true, 0.44, 0.4, 0.1, 0.05);
+		JRadioButton radio4 = panel.createRadioButton("4", false, 0.56, 0.4, 0.1, 0.05);
+		JRadioButton radio5 = panel.createRadioButton("5", false, 0.68, 0.4, 0.1, 0.05);
+
+		_bgroup = new ButtonGroup();
+		_bgroup.add(radio1);
+		_bgroup.add(radio2);
+		_bgroup.add(radio3);
+		_bgroup.add(radio4);
+		_bgroup.add(radio5);
 
 		panel.add(title_label);
 		panel.add(this._title_field);
 		panel.add(this._title_error);
-		panel.add(deadline_label);
+		panel.add(deadline_date_label);
 		panel.add(this._deadline_field);
-		panel.add(this._description_error);
+		panel.add(this._deadline_error);
+		panel.add(priority_label);
+		panel.add(radio1);
+		panel.add(radio2);
+		panel.add(radio3);
+		panel.add(radio4);
+		panel.add(radio5);
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Create Button", 0.2, 0.8, 0.2, 0.1);
+		JButton button = panel.createButton("Back to ToDo", 0.25, 0.6, 0.2, 0.1);
 		button.addActionListener(action);
+
+		JButton button2 = panel.createButton("Create", 0.55, 0.6, 0.2, 0.1);
+		button2.addActionListener(action);
+
 		panel.add(button);
+		panel.add(button2);
 	
 		return (panel);
 	}

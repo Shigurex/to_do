@@ -6,3 +6,4 @@ CREATE TABLE share (
 );
 
 INSERT INTO share (task, member, is_editable) VALUES (1, 2, false);
+INSERT INTO share (task, member, is_editable) VALUES (1, 3, false);

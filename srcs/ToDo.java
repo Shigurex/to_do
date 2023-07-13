@@ -1,11 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
@@ -26,6 +24,8 @@ public class ToDo extends BasePage {
 
 			if (cmd.equals("Add ToDo"))
 				page = new ToDoAdd(ToDo.this, _task_id);
+			else if (cmd.equals("Share"))
+				page = new Share(ToDo.this, _task_id);
 			else
 				page = new Error(ToDo.this);
 
@@ -82,6 +82,10 @@ public class ToDo extends BasePage {
 		JButton todo_add_button = panel.createButton("Add ToDo", 0.2, 0.75, 0.2, 0.1);
 		todo_add_button.addActionListener(action);
 		panel.add(todo_add_button);
+
+		JButton share_button = panel.createButton("Share", 0.7, 0.1, 0.1, 0.05);
+		share_button.addActionListener(action);
+		panel.add(share_button);
 
 		return (panel);
 	}
