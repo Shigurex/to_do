@@ -3,6 +3,7 @@ CREATE TABLE member (
 	id INTEGER PRIMARY KEY,
 	name TEXT,
 	email TEXT,
+	introduction TEXT,
 	password TEXT,
 	is_public BOOLEAN
 );

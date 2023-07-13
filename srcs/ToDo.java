@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 public class ToDo extends BasePage {
@@ -48,7 +49,8 @@ public class ToDo extends BasePage {
 		String[] columns = {"Title", "Deadline", "Create Time", "Update Time", "Done"};
 		TaskTableModel model = new TaskTableModel(null, columns);
 		JTable table = panel.createTable(model, 0.1, 0.2, 0.8, 0.5);
-		panel.add(table);
+		JScrollPane scrollPane = new JScrollPane(table);
+		panel.add(scrollPane);
 
 		ArrayList<ArrayList<String>> info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.is_done from task ta, todo td where td.task=ta.id and ta.id=? order by td.is_done asc, td.deadline asc;", 5, String.valueOf(this._task_id));
 		for (int i = 0; i < info.size(); i++) {

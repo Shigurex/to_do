@@ -21,12 +21,12 @@ public class Users extends BasePage {
 
 		ArrayList<ArrayList<String>> info = SQL.select("select name from member", 1);
 		int panel_size = info.size();
-		if (panel_size > 1)
-			panel.setPreferredSize(new Dimension(900, (int)(this._frame.getWinHeight() * (panel_size))));
+		if (0.3 + panel_size * 0.05 > 1)
+			panel.setPreferredSize(new Dimension(900, (int)(this._frame.getWinHeight() * (0.3 + panel_size * 0.05))));
 		for (int i = 0; i < info.size(); i++) {
 			ArrayList<String> str_list = info.get(i);
 			String username = str_list.get(0);
-			JLabel label = panel.createLabel(username, 0.45, 0.2 + i*0.5, 0.3, 0.05);
+			JLabel label = panel.createLabel(username, 0.45, 0.2 + i*0.05, 0.3, 0.05);
 			panel.add(label);
 			System.out.println(username);
 		}
