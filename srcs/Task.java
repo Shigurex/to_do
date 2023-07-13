@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class Task extends BasePage {
 	public Task(BasePage page) { super(page); }
@@ -16,7 +17,7 @@ public class Task extends BasePage {
 			if (cmd.startsWith("Task_")) {
 				int task_id = Integer.valueOf(cmd.substring(5));
 				page = new ToDo(Task.this, task_id);
-			} else if (cmd.equals("Task Add"))
+			} else if (cmd.equals("Add Task"))
 				page = new TaskAdd(Task.this);
 			else
 				page = new Error(Task.this);
@@ -33,11 +34,12 @@ public class Task extends BasePage {
 
 		JLabel label = panel.createLabel("Task", 0.45, 0.1, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label);
 
 		Action action = new Action();
 
-		JButton task_add_button = panel.createButton("Task Add", 0.65, 0.1, 0.1, 0.05);
+		JButton task_add_button = panel.createButton("Add Task", 0.2, 0.2, 0.6, 0.05);
 		task_add_button.addActionListener(action);
 		panel.add(task_add_button);
 
@@ -46,7 +48,7 @@ public class Task extends BasePage {
 			ArrayList<String> str_list = info.get(i);
 			String task_id = str_list.get(0);
 			String task_name = str_list.get(1);
-			JButton task_button = panel.createButton(task_name, 0.2, 0.2 + i * 0.05, 0.6, 0.05);
+			JButton task_button = panel.createButton(task_name, 0.2, 0.25 + i * 0.05, 0.6, 0.05);
 			task_button.setActionCommand("Task_" + task_id);
 			task_button.addActionListener(action);
 			panel.add(task_button);
