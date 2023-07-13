@@ -40,16 +40,16 @@ public class ToDoAdd extends BasePage {
 			String deadline = _deadline_field.getText();
 			if (!isValid(title, deadline))
 				return (null);
-			addToDo(title, deadline);
+			addToDo(title, deadline, 5);
 			return (new ToDo(ToDoAdd.this, _task_id));
 		}
 
-		public void addToDo(String title, String deadline) {
+		public void addToDo(String title, String deadline, int priority) {
 			LocalDateTime time_now = LocalDateTime.now();
 			DateTimeFormatter time_format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			String create_time = time_format.format(time_now);
 			String update_time = time_format.format(time_now);
-			SQL.insert("insert into todo (task, title, deadline, create_time, update_time, is_done) VALUES(?, ?, ?, ?, ?, ?)", String.valueOf(_task_id), title, deadline, create_time, update_time, "0");
+			SQL.insert("insert into todo (task, title, deadline, create_time, update_time, priority, is_done) VALUES(?, ?, ?, ?, ?, ?, ?)", String.valueOf(_task_id), title, deadline, create_time, update_time, String.valueOf(priority), "0");
 		}
 
 		public boolean isValid(String name, String description) {
