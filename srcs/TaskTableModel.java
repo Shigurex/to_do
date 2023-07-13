@@ -6,4 +6,8 @@ public class TaskTableModel extends DefaultTableModel {
 	public Class getColumnClass(int col) {
 		return (getValueAt(0, col).getClass());
 	}
+
+	public boolean isCellEditable(int row, int column) {
+		return false;
+	}
 }

@@ -1,8 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -12,19 +15,24 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
-public class ToDoAdd extends BasePage {
+public class ToDoEdit extends BasePage {
 	private int _task_id;
+	private int _todo_id;
+	private String _title;
+	private String _deadline;
+	private int _priority;
 	private JTextField _title_field;
 	private JLabel _title_error;
 	private JSpinner _deadline_field;
 	private JLabel _deadline_error;
 	private ButtonGroup _bgroup;
 
-	public ToDoAdd(BasePage page) { super(page); }
-	public ToDoAdd(BaseFrame frame) { super(frame); }
-	public ToDoAdd(BasePage page, int task_id) {
+	public ToDoEdit(BasePage page) { super(page); }
+	public ToDoEdit(BaseFrame frame) { super(frame); }
+	public ToDoEdit(BasePage page, int task_id, int todo_id) {
 		super(page);
 		this._task_id = task_id;
+		this._todo_id = todo_id;
 	}
 
 	public class Action implements ActionListener {
@@ -32,15 +40,15 @@ public class ToDoAdd extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.equals("Create"))
+			if (cmd.equals("Complete Editing"))
 				page = checkField();
 			else if (cmd.equals("Back to ToDo"))
-				page = new ToDo(ToDoAdd.this, _task_id);
+				page = new ToDo(ToDoEdit.this, _task_id);
 			else
-				page = new Error(ToDoAdd.this);
+				page = new Error(ToDoEdit.this);
 
 			if (page != null)
-				ToDoAdd.this._frame.changePanel(page.createPage());
+				ToDoEdit.this._frame.changePanel(page.createPage());
 		}
 
 		public BasePage checkField() {
@@ -49,16 +57,15 @@ public class ToDoAdd extends BasePage {
 			int priority = Integer.valueOf(_bgroup.getSelection().getActionCommand());
 			if (!isValid(title, deadline))
 				return (null);
-			addToDo(title, deadline, priority);
-			return (new ToDo(ToDoAdd.this, _task_id));
+			updateToDo(title, deadline, priority);
+			return (new ToDo(ToDoEdit.this, _task_id));
 		}
 
-		public void addToDo(String title, String deadline, int priority) {
+		public void updateToDo(String title, String deadline, int priority) {
 			LocalDateTime time_now = LocalDateTime.now();
 			DateTimeFormatter time_format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-			String create_time = time_format.format(time_now);
 			String update_time = time_format.format(time_now);
-			SQL.insert("insert into todo (task, title, deadline, create_time, update_time, priority, is_done) VALUES(?, ?, ?, ?, ?, ?, ?)", String.valueOf(_task_id), title, deadline, create_time, update_time, String.valueOf(priority), "0");
+			SQL.update("update todo set title = ?, deadline = ?, update_time = ?, priority = ? where id = ?", title, deadline, update_time, String.valueOf(priority), String.valueOf(_todo_id));
 		}
 
 		public boolean isValid(String title, String deadline) {
@@ -77,17 +84,27 @@ public class ToDoAdd extends BasePage {
 		}
 	}
 
+	public void setDefaultToDo() {
+		ArrayList<ArrayList<String>> info = SQL.select("select title, deadline, priority from todo where id=?", 3, String.valueOf(_todo_id));
+		ArrayList<String> str_list = info.get(0);
+		this._title = str_list.get(0);
+		this._deadline = str_list.get(1);
+		this._priority = Integer.valueOf(str_list.get(2));
+	}
+
 	public BasePanel createPage() {
 		BasePanel panel = new BasePanel(this._frame);
 		panel.is_menu = true;
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("ToDoAdd", 0.45, 0.1, 0.1, 0.05);
+		setDefaultToDo();
+
+		JLabel label = panel.createLabel("ToDoEdit", 0.45, 0.1, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		panel.add(label);
 
 		JLabel title_label = panel.createLabel("Title: ", 0.05, 0.2, 0.15, 0.05);
-		this._title_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
+		this._title_field = panel.createTextField(this._title, 0.2, 0.2, 0.6, 0.05);
 		this._title_error = panel.createLabel("",0.2, 0.25, 0.6, 0.05);
 		this._title_error.setForeground(Color.RED);
 
@@ -98,15 +115,41 @@ public class ToDoAdd extends BasePage {
 		JComponent editor = new JSpinner.DateEditor(_deadline_field, "yyyy/MM/dd HH:mm:ss");
 		_deadline_field.setEditor(editor);
 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		try {
+			Date defaultDate = dateFormat.parse(_deadline);
+			model.setValue(defaultDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		this._deadline_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
 		this._deadline_error.setForeground(Color.RED);
 
 		JLabel priority_label = panel.createLabel("Priority: ", 0.05, 0.4, 0.15, 0.05);
 		JRadioButton radio1 = panel.createRadioButton("1", false, 0.2, 0.4, 0.1, 0.05);
 		JRadioButton radio2 = panel.createRadioButton("2", false, 0.32, 0.4, 0.1, 0.05);
-		JRadioButton radio3 = panel.createRadioButton("3", true, 0.44, 0.4, 0.1, 0.05);
+		JRadioButton radio3 = panel.createRadioButton("3", false, 0.44, 0.4, 0.1, 0.05);
 		JRadioButton radio4 = panel.createRadioButton("4", false, 0.56, 0.4, 0.1, 0.05);
 		JRadioButton radio5 = panel.createRadioButton("5", false, 0.68, 0.4, 0.1, 0.05);
+
+		switch (_priority) {
+			case 1:
+				radio1.setSelected(true);
+				break ;
+			case 2:
+				radio2.setSelected(true);
+				break ;
+			case 3:
+				radio3.setSelected(true);
+				break ;
+			case 4:
+				radio4.setSelected(true);
+				break ;
+			case 5:
+				radio5.setSelected(true);
+				break ;
+		}
 
 		_bgroup = new ButtonGroup();
 		_bgroup.add(radio1);
@@ -133,7 +176,7 @@ public class ToDoAdd extends BasePage {
 		JButton button = panel.createButton("Back to ToDo", 0.25, 0.6, 0.2, 0.1);
 		button.addActionListener(action);
 
-		JButton button2 = panel.createButton("Create", 0.55, 0.6, 0.2, 0.1);
+		JButton button2 = panel.createButton("Complete Editing", 0.55, 0.6, 0.2, 0.1);
 		button2.addActionListener(action);
 
 		panel.add(button);
