@@ -97,10 +97,12 @@ public class Login extends BasePage {
 		BasePanel panel = new BasePanel(this._frame);
 		panel.setLayout(null);
 
-		flash_message = panel.createLabel(this.message,0.45, 0.05, 0.2, 0.05);
+		flash_message = panel.createLabel(this.message,0.4, 0.05, 0.2, 0.05);
 		flash_message.setForeground(Color.GREEN);
-		JLabel label = panel.createLabel("Login", 0.45, 0.1, 0.3, 0.05);
+		flash_message.setHorizontalAlignment(JLabel.CENTER);
+		JLabel label = panel.createLabel("Login", 0.35, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setHorizontalAlignment(JLabel.CENTER);
 
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
 		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);

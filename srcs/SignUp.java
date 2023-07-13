@@ -122,10 +122,12 @@ public class SignUp extends BasePage {
 		BasePanel panel = new BasePanel(_frame);
 		panel.setLayout(null);
 
-		flash_message = panel.createLabel("",0.35, 0.05, 0.3, 0.05);
+		flash_message = panel.createLabel("", 0.35, 0.05, 0.3, 0.05);
 		flash_message.setForeground(Color.RED);
-		JLabel label = panel.createLabel("SignUp", 0.45, 0.1, 0.3, 0.05);
+		flash_message.setHorizontalAlignment(JLabel.CENTER);
+		JLabel label = panel.createLabel("SignUp", 0.35, 0.1, 0.3, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setHorizontalAlignment(JLabel.RIGHT);
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
 		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
 		username_error = panel.createLabel("", 0.2, 0.25, 0.5,0.05);

@@ -26,8 +26,9 @@ public class Start extends BasePage {
 		BasePanel panel = new BasePanel(this._frame);
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("To Do", 0.45, 0.2, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel label = panel.createLabel("To Do", 0.35, 0.2, 0.3, 0.05);
+		label.setFont(new Font("Arial", Font.PLAIN, 30));
+		label.setHorizontalAlignment(JLabel.CENTER);
 		panel.add(label);
 
 		JButton button = panel.createButton("Start", 0.4, 0.5, 0.2, 0.1);
