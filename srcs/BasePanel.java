@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class BasePanel extends JPanel {
 	private BaseFrame _frame;
@@ -67,5 +68,32 @@ public class BasePanel extends JPanel {
 			convertAbsToRelValue(this._win_height, height));
 		radio.setActionCommand(name);
 		return (radio);
+	}
+
+	public JList<String> createStringList(String[] elements, double x, double y, double width, double height) {
+		JList<String> list = new JList<String>(elements);
+		list.setBounds(convertAbsToRelValue(this._win_width, x),
+			convertAbsToRelValue(this._win_height, y),
+			convertAbsToRelValue(this._win_width, width),
+			convertAbsToRelValue(this._win_height, height));
+		return (list);
+	}
+
+	public JList<String> createList(String[] elements, double x, double y, double width, double height) {
+		JList<String> list = new JList<String>(elements);
+		list.setBounds(convertAbsToRelValue(this._win_width, x),
+			convertAbsToRelValue(this._win_height, y),
+			convertAbsToRelValue(this._win_width, width),
+			convertAbsToRelValue(this._win_height, height));
+		return (list);
+	}
+
+	public JTable createTable(DefaultTableModel model, double x, double y, double width, double height) {
+		JTable table = new JTable(model);
+		table.setBounds(convertAbsToRelValue(this._win_width, x),
+			convertAbsToRelValue(this._win_height, y),
+			convertAbsToRelValue(this._win_width, width),
+			convertAbsToRelValue(this._win_height, height));
+		return (table);
 	}
 }

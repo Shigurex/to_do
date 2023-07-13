@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 public class ToDo extends BasePage {
 	private int _task_id;
@@ -33,21 +35,29 @@ public class ToDo extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("ToDo", 0.45, 0.1, 0.1, 0.05);
+		ArrayList<ArrayList<String>> name_info = SQL.select("select name from task where id=?;", 1, String.valueOf(this._task_id));
+		String name = name_info.get(0).get(0);
+
+		JLabel label = panel.createLabel(name, 0.45, 0.1, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label);
 
-		//Action action = new Action();
+		String[] columns = {"Title", "Deadline", "Create Time", "Update Time", "Done"};
+		TaskTableModel model = new TaskTableModel(null, columns);
+		JTable table = panel.createTable(model, 0.1, 0.2, 0.8, 0.5);
+		panel.add(table);
 
-		ArrayList<ArrayList<String>> info = SQL.select("select td.title, td.deadline from task ta, todo td where td.task=ta.id and ta.id=?;", 2, String.valueOf(this._task_id));
+		ArrayList<ArrayList<String>> info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.is_done from task ta, todo td where td.task=ta.id and ta.id=?;", 5, String.valueOf(this._task_id));
 		for (int i = 0; i < info.size(); i++) {
 			ArrayList<String> str_list = info.get(i);
 			String todo_title = str_list.get(0);
 			String todo_deadline = str_list.get(1);
-			JLabel todo_title_label = panel.createLabel(todo_title, 0.2, 0.2 + i * 0.05, 0.5, 0.05);
-			JLabel todo_deadline_label = panel.createLabel(todo_deadline, 0.6, 0.2 + i * 0.05, 0.2, 0.05);
-			panel.add(todo_title_label);
-			panel.add(todo_deadline_label);
+			String todo_create_time = str_list.get(2);
+			String todo_update_time = str_list.get(3);
+			boolean todo_is_done = str_list.get(4).equals("1") ? true : false;
+			Object[] content = {todo_title, todo_deadline, todo_create_time, todo_update_time, todo_is_done};
+			model.addRow(content);
 		}
 
 		return (panel);
