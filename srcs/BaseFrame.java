@@ -29,11 +29,13 @@ public class BaseFrame extends JFrame {
 
 	public void changePanel(BasePanel content) {
 		getContentPane().removeAll();
-		super.add(content);
+		// super.add(content);
 		if (content.is_menu) {
 			BasePage menu = new Menu(content.getFrame());
 			super.add(menu.createPage(), BorderLayout.PAGE_START);
 		}
+		JScrollPane scrollpane = new JScrollPane(content, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		getContentPane().add(scrollpane, BorderLayout.CENTER);
 		validate();
 		repaint();
 	}
