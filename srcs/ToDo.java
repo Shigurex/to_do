@@ -32,7 +32,7 @@ public class ToDo extends BasePage {
 			else if (cmd.equals("Edit ToDo"))
 				page = getSelectedToDo();
 			else if (cmd.equals("Share"))
-				page = new Error(ToDo.this);
+				page = new Share(ToDo.this, task_id);
 			else
 				page = new Error(ToDo.this);
 

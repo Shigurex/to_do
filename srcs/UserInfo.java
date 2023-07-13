@@ -4,15 +4,16 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class UserInfo extends BasePage {
+	private String user_id;
 	private String username;
 	private String email;
 	private String is_public;
 
 	public UserInfo(BaseFrame frame) { super(frame); }
 	public UserInfo(BasePage page) { super(page); }
-	public UserInfo(BasePage page, String username) {
+	public UserInfo(BasePage page, String user_id) {
 		super(page);
-		this.username = username;
+		this.user_id = user_id;
 	}
 
 	public class Action implements ActionListener {
@@ -31,7 +32,7 @@ public class UserInfo extends BasePage {
 	}
 
 	public void setUserInfo() {
-		ArrayList<ArrayList<String>> info = SQL.select("select name, email, is_public from member where name=?", 3, username);
+		ArrayList<ArrayList<String>> info = SQL.select("select name, email, is_public from member where id=?", 3, user_id);
 		ArrayList<String> str_list = info.get(0);
 		this.username = str_list.get(0);
 		this.email = str_list.get(1);

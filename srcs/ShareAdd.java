@@ -22,10 +22,11 @@ public class ShareAdd extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Back to Share"))
-				page = new ToDo(ShareAdd.this, task_id);
+				page = new Share(ShareAdd.this, task_id);
 			else if (cmd.startsWith("User_")) {
-				String member_name = cmd.substring(5);
-				//insert;
+				String member_id = cmd.substring(5);
+				insertUser(String.valueOf(task_id), member_id, "0");
+				search_list = null;
 				page = new ShareAdd(ShareAdd.this, ShareAdd.this.task_id);
 			}
 			else if (cmd.equals("Search"))
@@ -47,7 +48,7 @@ public class ShareAdd extends BasePage {
 				return (new ShareAdd(ShareAdd.this, task_id));
 			}
 			else {
-				search_list = SQL.select_like("SELECT name FROM member WHERE is_public=1 and name LIKE ?", 1, username);
+				search_list = SQL.select_like("SELECT name, id FROM member WHERE is_public=1 and name LIKE ?", 2, username);
 				if (search_list.size() == 0) {
 					search_list = null;
 					return (new ShareAdd(ShareAdd.this, task_id));
@@ -55,6 +56,10 @@ public class ShareAdd extends BasePage {
 				else
 					return (new ShareAdd(ShareAdd.this, task_id));
 			}
+		}
+
+		public static void insertUser(String task, String member, String is_editable) {
+			SQL.insert("insert into share (task, member, is_editable) VALUES(?, ?, ?)", task, member, is_editable);
 		}
 	}
 
@@ -87,9 +92,10 @@ public class ShareAdd extends BasePage {
 			for (int i = 0; i < search_list.size(); i++) {
 				ArrayList<String> str_list = search_list.get(i);
 				String username = str_list.get(0);
+				String user_id = str_list.get(1);
 				JLabel search_label = panel.createLabel(username, 0.3, panel_height, 0.2, 0.05);
 				JButton search_ans = panel.createButton("set Viewable", 0.55, panel_height, 0.15, 0.05);
-				search_ans.setActionCommand("User_" + username);
+				search_ans.setActionCommand("User_" + user_id);
 				search_ans.addActionListener(action);
 				panel.add(search_label);
 				panel.add(search_ans);

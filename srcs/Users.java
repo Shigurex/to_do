@@ -37,13 +37,13 @@ public class Users extends BasePage {
 			if (username.equals("")) {
 				username_error.setText("Please input username");
 				search_list = null;
-				return (null);
+				return (new Users(Users.this));
 			}
 			else {
-				search_list = SQL.select_like("SELECT name FROM member WHERE is_public=1 and name LIKE ?", 1, username);
+				search_list = SQL.select_like("SELECT name, id FROM member WHERE is_public=1 and name LIKE ?", 2, username);
 				if (search_list.size() == 0) {
 					search_list = null;
-					return (null);
+					return (new Users(Users.this));
 				}
 				else
 					return (new Users(Users.this));
@@ -72,14 +72,20 @@ public class Users extends BasePage {
 		button.addActionListener(action);
 		panel.add(button);
 
+		double panel_height = 0.3;
 		if (search_list != null) {
 			for (int i = 0; i < search_list.size(); i++) {
 				ArrayList<String> str_list = search_list.get(i);
 				String username = str_list.get(0);
-				JButton search_ans = panel.createButton(username, 0.35, 0.3 + i*0.06, 0.3, 0.05);
-				search_ans.setActionCommand("User_" + username);
+				String user_id = str_list.get(1);
+				JButton search_ans = panel.createButton(username, 0.35, panel_height, 0.3, 0.05);
+				search_ans.setActionCommand("User_" + user_id);
 				search_ans.addActionListener(action);
 				panel.add(search_ans);
+
+				panel_height = panel_height + 0.06;
+				if (panel_height > 0.8)
+					panel.setPreferredSize(new Dimension(900, (int)(Users.this._frame.getWinHeight() * (panel_height + 0.2))));
 			}
 		}
 

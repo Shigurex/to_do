@@ -48,7 +48,7 @@ public class Task extends BasePage {
 			ArrayList<String> str_list = info.get(i);
 			String task_id = str_list.get(0);
 			String task_name = str_list.get(1);
-			JButton task_button = panel.createButton(task_name, 0.2, 0.25 + i * 0.06, 0.6, 0.05);
+			JButton task_button = panel.createButton(task_name, 0.2, 0.3 + i * 0.06, 0.6, 0.05);
 			task_button.setActionCommand("Task_" + task_id);
 			task_button.addActionListener(action);
 			panel.add(task_button);

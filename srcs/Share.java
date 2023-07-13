@@ -19,9 +19,9 @@ public class Share extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Back to ToDo"))
-				page = new ToDo(Share.this, task_id);
+				page = new ToDo(Share.this, Share.this.task_id);
 			else if (cmd.equals("Share member add"))
-				page = new ShareAdd(Share.this, task_id);
+				page = new ShareAdd(Share.this, Share.this.task_id);
 			else if (cmd.startsWith("Editable_")) {
 				String member_id = cmd.substring(9);
 				updateEditable("1", member_id, Share.this.task_id);
@@ -56,7 +56,7 @@ public class Share extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Share member add", 0.65, 0.1, 0.1, 0.05);
+		JButton button = panel.createButton("Share member add", 0.6, 0.1, 0.2, 0.05);
 		button.addActionListener(action);
 		panel.add(button);
 

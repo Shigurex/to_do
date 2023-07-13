@@ -26,7 +26,7 @@ public class MyInfoEdit extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Complete Editing")) {
-				int option = JOptionPane.showConfirmDialog(MyInfoEdit.this._frame, "本当に更新しますか？","confirm", JOptionPane.YES_NO_OPTION);
+				int option = JOptionPane.showConfirmDialog(MyInfoEdit.this._frame, "Update OK？","confirm", JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.YES_OPTION)
 					page = checkEdit();
 				else if (option == JOptionPane.NO_OPTION)
