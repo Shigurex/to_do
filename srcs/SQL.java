@@ -81,7 +81,41 @@ public class SQL {
 		}
 		return (result);
 	}
-		public static void update(String statement, String... s) {
+
+	public static ArrayList<ArrayList<String>>	select_like(String statement, int elements, String... s) {
+		Connection conn = null;
+		ArrayList<ArrayList<String>> result = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + SQL.db_dir + SQL.db_name);
+
+			PreparedStatement ps = conn.prepareStatement(statement);
+			int index = 0;
+			for (String str : s)
+				ps.setString(++index, "%" + str + "%");
+			ResultSet rs = ps.executeQuery();
+			result = new ArrayList<ArrayList<String>>();
+			while( rs.next() ) {
+				ArrayList<String> value = new ArrayList<String>();
+				for (int i = 1; i <= elements; i++)
+					value.add(rs.getString(i));
+				result.add(value);
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return (result);
+	}
+
+	public static void update(String statement, String... s) {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
