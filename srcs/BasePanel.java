@@ -96,4 +96,13 @@ public class BasePanel extends JPanel {
 			convertAbsToRelValue(this._win_height, height));
 		return (table);
 	}
+
+	public JSpinner createSpinner(SpinnerDateModel model, double x, double y, double width, double height) {
+		JSpinner spinner = new JSpinner(model);
+		spinner.setBounds(convertAbsToRelValue(this._win_width, x),
+			convertAbsToRelValue(this._win_height, y),
+			convertAbsToRelValue(this._win_width, width),
+			convertAbsToRelValue(this._win_height, height));
+		return (spinner);
+	}
 }

@@ -19,8 +19,10 @@ public class TaskAdd extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.equals("Create Button"))
+			if (cmd.equals("Create"))
 				page = checkField();
+			else if (cmd.equals("Back to Task"))
+				page = new Task(TaskAdd.this);
 			else
 				page = new Error(TaskAdd.this);
 
@@ -86,9 +88,14 @@ public class TaskAdd extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Create Button", 0.2, 0.8, 0.2, 0.1);
+		JButton button = panel.createButton("Back to Task", 0.25, 0.5, 0.2, 0.1);
 		button.addActionListener(action);
+
+		JButton button2 = panel.createButton("Create", 0.55, 0.5, 0.2, 0.1);
+		button2.addActionListener(action);
+
 		panel.add(button);
+		panel.add(button2);
 
 		return (panel);
 	}
