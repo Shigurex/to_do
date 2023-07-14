@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class TaskAdd extends BasePage {
+	private static String page_from = "MyTask";
 	private JTextField _name_field;
 	private JLabel _name_error;
 	private JTextField _description_field;
@@ -13,6 +14,10 @@ public class TaskAdd extends BasePage {
 
 	public TaskAdd(BasePage page) { super(page); }
 	public TaskAdd(BaseFrame frame) { super(frame); }
+	public TaskAdd(BasePage page, String page_from) {
+		super(page);
+		TaskAdd.page_from = page_from;
+	}
 
 	public class Action implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -22,12 +27,22 @@ public class TaskAdd extends BasePage {
 			if (cmd.equals("Create"))
 				page = checkField();
 			else if (cmd.equals("Back to Task"))
-				page = new Task(TaskAdd.this);
+				page = getPreviousPage();
 			else
 				page = new Error(TaskAdd.this);
 
 			if (page != null)
 				TaskAdd.this._frame.changePanel(page.createPage());
+		}
+
+		public BasePage getPreviousPage() {
+			if (page_from.equals("MyTask"))
+				return (new MyTask(TaskAdd.this));
+			else if (page_from.equals("ArchivedTask"))
+				return (new ArchivedTask(TaskAdd.this));
+			else if (page_from.equals("SharedTask"))
+				return (new SharedTask(TaskAdd.this));
+			return (null);
 		}
 
 		public BasePage checkField() {
@@ -36,7 +51,7 @@ public class TaskAdd extends BasePage {
 			if (!isValid(name, description))
 				return (null);
 			addTask(name, description, false);
-			return (new Task(TaskAdd.this));
+			return (getPreviousPage());
 		}
 
 		public void addTask(String name, String description, boolean is_archive) {

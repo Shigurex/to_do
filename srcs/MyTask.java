@@ -24,7 +24,7 @@ public class MyTask extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Add Task"))
-				page = new TaskAdd(MyTask.this);
+				page = new TaskAdd(MyTask.this, "MyTask");
 			else if (cmd.equals("Back to Task"))
 				page = new Task(MyTask.this);
 			else if (cmd.equals("Get ToDo"))
@@ -128,6 +128,10 @@ public class MyTask extends BasePage {
 		JButton task_button = panel.createButton("Back to Task", 0.7, 0.1, 0.1, 0.05);
 		task_button.addActionListener(action);
 		button_panel.add(task_button);
+
+		JButton add_button = panel.createButton("Add Task", 0.7, 0.1, 0.1, 0.05);
+		add_button.addActionListener(action);
+		button_panel.add(add_button);
 
 		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
 		todo_button.addActionListener(action);
