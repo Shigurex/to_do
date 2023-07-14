@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -14,11 +13,12 @@ public class Task extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.startsWith("Task_")) {
-				int task_id = Integer.valueOf(cmd.substring(5));
-				page = new ToDo(Task.this, task_id);
-			} else if (cmd.equals("Add Task"))
-				page = new TaskAdd(Task.this);
+			if (cmd.equals("My Task"))
+				page = new MyTask(Task.this);
+			else if (cmd.equals("Archived Task"))
+				page = new MyTask(Task.this);
+			else if (cmd.equals("Shared Task"))
+				page = new MyTask(Task.this);
 			else
 				page = new Error(Task.this);
 
@@ -39,20 +39,17 @@ public class Task extends BasePage {
 
 		Action action = new Action();
 
-		JButton task_add_button = panel.createButton("Add Task", 0.2, 0.2, 0.6, 0.05);
-		task_add_button.addActionListener(action);
-		panel.add(task_add_button);
+		JButton my_task_add_button = panel.createButton("My Task", 0.2, 0.3, 0.6, 0.05);
+		my_task_add_button.addActionListener(action);
+		panel.add(my_task_add_button);
 
-		ArrayList<ArrayList<String>> info = SQL.select("select ta.id, ta.name from member m, task ta where ta.owner=m.id and m.id=?;", 2, String.valueOf(this._frame.getLoginId()));
-		for (int i = 0; i < info.size(); i++) {
-			ArrayList<String> str_list = info.get(i);
-			String task_id = str_list.get(0);
-			String task_name = str_list.get(1);
-			JButton task_button = panel.createButton(task_name, 0.2, 0.3 + i * 0.06, 0.6, 0.05);
-			task_button.setActionCommand("Task_" + task_id);
-			task_button.addActionListener(action);
-			panel.add(task_button);
-		}
+		JButton archived_task_add_button = panel.createButton("Archived Task", 0.2, 0.5, 0.6, 0.05);
+		archived_task_add_button.addActionListener(action);
+		panel.add(archived_task_add_button);
+
+		JButton shared_task_add_button = panel.createButton("Shared Task", 0.2, 0.7, 0.6, 0.05);
+		shared_task_add_button.addActionListener(action);
+		panel.add(shared_task_add_button);
 
 		return (panel);
 	}

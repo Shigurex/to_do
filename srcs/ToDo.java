@@ -13,9 +13,9 @@ import javax.swing.table.TableColumn;
 public class ToDo extends BasePage {
 	private int task_id;
 	private JTable table;
-	ToDoTableModel model;
-	ToDoEditListener listener;
-	ArrayList<ArrayList<String>> info;
+	private ToDoTableModel model;
+	private ToDoEditListener listener;
+	private ArrayList<ArrayList<String>> info;
 
 	public ToDo(BasePage page) { super(page); }
 	public ToDo(BaseFrame frame) { super(frame); }
