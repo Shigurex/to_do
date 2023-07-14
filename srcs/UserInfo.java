@@ -63,6 +63,7 @@ public class UserInfo extends BasePage {
 		panel.add(username_label);
 		panel.add(email_label);
 		panel.add(public_label);
+		panel.add(introduction_label);
 
 		JButton button = panel.createButton("Back to Users", 0.4, 0.6, 0.2, 0.05);
 		Action action = new Action();

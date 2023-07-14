@@ -33,7 +33,6 @@ public class Users extends BasePage {
 		public BasePage searchUser() {
 			String username = username_field.getText();
 			username_field.setText("");
-			boolean is_valid = true;
 			if (username.equals("")) {
 				username_error.setText("Please input username");
 				search_list = null;

@@ -35,12 +35,12 @@ public class TaskAdd extends BasePage {
 			String description = _description_field.getText();
 			if (!isValid(name, description))
 				return (null);
-			addTask(name, description, false, false);
+			addTask(name, description, false);
 			return (new Task(TaskAdd.this));
 		}
 
-		public void addTask(String name, String description, boolean is_public, boolean is_archive) {
-			SQL.insert("insert into task (owner, name, description, is_public, is_archive) VALUES(?, ?, ?, ?, ?)", String.valueOf(TaskAdd.this._frame.getLoginId()), name, description, is_public ? "1" : "0", is_archive ? "1" : "0");
+		public void addTask(String name, String description, boolean is_archive) {
+			SQL.insert("insert into task (owner, name, description, is_archive) VALUES(?, ?, ?, ?)", String.valueOf(TaskAdd.this._frame.getLoginId()), name, description, is_archive ? "1" : "0");
 		}
 
 		public boolean isValid(String name, String description) {
