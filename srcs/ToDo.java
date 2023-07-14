@@ -17,17 +17,30 @@ public class ToDo extends BasePage {
 	private ToDoTableModel model;
 	private ToDoEditListener listener;
 	private ArrayList<ArrayList<String>> info;
+	private boolean is_editable = true;
+	private boolean is_shareable = true;
 
 	public ToDo(BasePage page) { super(page); }
 	public ToDo(BaseFrame frame) { super(frame); }
 	public ToDo(BasePage page, int task_id) {
 		super(page);
 		this.task_id = task_id;
+		this.is_editable = true;
+		is_shareable = true;
 	}
 	public ToDo(BasePage page, int task_id, String page_from) {
 		super(page);
 		ToDo.page_from = page_from;
 		this.task_id = task_id;
+		this.is_editable = true;
+		is_shareable = true;
+	}
+	public ToDo(BasePage page, int task_id, String page_from, boolean is_editable) {
+		super(page);
+		ToDo.page_from = page_from;
+		this.task_id = task_id;
+		this.is_editable = is_editable;
+		is_shareable = false;
 	}
 
 	public class Action implements ActionListener {
@@ -101,7 +114,7 @@ public class ToDo extends BasePage {
 
 		String[] columns = {"Title", "Deadline", "Create Time", "Update Time", "Priority", "Done"};
 
-		model = new ToDoTableModel(null, columns);
+		model = new ToDoTableModel(null, columns, is_editable);
 
 		info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.priority, td.is_done, td.id from task ta, todo td where td.task=ta.id and ta.id=? order by td.is_done asc, td.deadline asc;", 7, String.valueOf(this.task_id));
 		for (int i = 0; i < info.size(); i++) {
@@ -143,21 +156,25 @@ public class ToDo extends BasePage {
 		task_button.addActionListener(action);
 		button_panel.add(task_button);
 
-		JButton todo_add_button = panel.createButton("Add ToDo", 0.2, 0.75, 0.2, 0.1);
-		todo_add_button.addActionListener(action);
-		button_panel.add(todo_add_button);
+		if (is_editable) {
+			JButton todo_add_button = panel.createButton("Add ToDo", 0.2, 0.75, 0.2, 0.1);
+			todo_add_button.addActionListener(action);
+			button_panel.add(todo_add_button);
 
-		JButton todo_edit_button = panel.createButton("Edit ToDo", 0.2, 0.75, 0.2, 0.1);
-		todo_edit_button.addActionListener(action);
-		button_panel.add(todo_edit_button);
+			JButton todo_edit_button = panel.createButton("Edit ToDo", 0.2, 0.75, 0.2, 0.1);
+			todo_edit_button.addActionListener(action);
+			button_panel.add(todo_edit_button);
 
-		JButton todo_delete_button = panel.createButton("Delete ToDo", 0.2, 0.75, 0.2, 0.1);
-		todo_delete_button.addActionListener(action);
-		button_panel.add(todo_delete_button);
+			JButton todo_delete_button = panel.createButton("Delete ToDo", 0.2, 0.75, 0.2, 0.1);
+			todo_delete_button.addActionListener(action);
+			button_panel.add(todo_delete_button);
+		}
 
-		JButton share_button = panel.createButton("Share", 0.7, 0.1, 0.1, 0.05);
-		share_button.addActionListener(action);
-		button_panel.add(share_button);
+		if (is_shareable) {
+			JButton share_button = panel.createButton("Share", 0.7, 0.1, 0.1, 0.05);
+			share_button.addActionListener(action);
+			button_panel.add(share_button);
+		}
 
 		panel.add(button_panel, BorderLayout.SOUTH);
 

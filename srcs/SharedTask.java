@@ -42,7 +42,8 @@ public class SharedTask extends BasePage {
 				return (null);
 			ArrayList<String> str_list = info_total.get(selected_row);
 			int task_id = Integer.valueOf(str_list.get(0));
-			return (new ToDo(SharedTask.this, task_id, "SharedTask"));
+			boolean is_editable = str_list.get(3).equals("1") ? true : false;
+			return (new ToDo(SharedTask.this, task_id, "SharedTask", is_editable));
 		}
 	}
 
@@ -58,10 +59,10 @@ public class SharedTask extends BasePage {
 
 		String[] columns = {"Name", "Description", "Total", "Completed", "Uncompleted"};
 
-		model = new ToDoTableModel(null, columns);
+		model = new ToDoTableModel(null, columns, false);
 
-		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta, share s where s.member = m.id and s.task = ta.id and m.id = ? group by ta.id;", 3, String.valueOf(SharedTask.this._frame.getLoginId()));
-		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, share s, todo td where s.member = m.id and s.task = ta.id and m.id = ? and td.task = ta.id group by ta.id;", 6, String.valueOf(SharedTask.this._frame.getLoginId()));
+		info_total = SQL.select("select ta.id, ta.name, ta.description, s.is_editable from member m, task ta, share s where s.member = m.id and s.task = ta.id and m.id = ? group by ta.id;", 4, String.valueOf(SharedTask.this._frame.getLoginId()));
+		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done), s.is_editable from member m, task ta, share s, todo td where s.member = m.id and s.task = ta.id and m.id = ? and td.task = ta.id group by ta.id;", 7, String.valueOf(SharedTask.this._frame.getLoginId()));
 		int index = 0;
 		String selected_list_id = null;
 		if (index != info_selected.size())

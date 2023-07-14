@@ -70,7 +70,7 @@ public class ArchivedTask extends BasePage {
 
 		String[] columns = {"Name", "Description", "Total", "Completed", "Uncompleted"};
 
-		model = new ToDoTableModel(null, columns);
+		model = new ToDoTableModel(null, columns, false);
 
 		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and ta.is_archive = ? and m.id = ? group by ta.id;", 3, "1", String.valueOf(ArchivedTask.this._frame.getLoginId()));
 		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and ta.is_archive = ? and m.id = ? group by ta.id;", 6, "1", String.valueOf(ArchivedTask.this._frame.getLoginId()));
