@@ -60,8 +60,8 @@ public class SharedTask extends BasePage {
 
 		model = new ToDoTableModel(null, columns);
 
-		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and m.id = ? group by ta.id;", 3, String.valueOf(SharedTask.this._frame.getLoginId()));
-		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and m.id = ? group by ta.id;", 6, String.valueOf(SharedTask.this._frame.getLoginId()));
+		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta, share s where s.member = m.id and s.task = ta.id and m.id = ? group by ta.id;", 3, String.valueOf(SharedTask.this._frame.getLoginId()));
+		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, share s, todo td where s.member = m.id and s.task = ta.id and m.id = ? and td.task = ta.id group by ta.id;", 6, String.valueOf(SharedTask.this._frame.getLoginId()));
 		int index = 0;
 		String selected_list_id = null;
 		if (index != info_selected.size())
