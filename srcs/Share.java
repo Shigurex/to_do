@@ -22,6 +22,11 @@ public class Share extends BasePage {
 				page = new ToDo(Share.this, Share.this.task_id);
 			else if (cmd.equals("Share member add"))
 				page = new ShareAdd(Share.this, Share.this.task_id);
+			else if (cmd.startsWith("Delete_")) {
+				String member_id = cmd.substring(7);
+				deleteEditable(member_id, Share.this.task_id);
+				page = new Share(Share.this, Share.this.task_id);
+			}
 			else if (cmd.startsWith("Editable_")) {
 				String member_id = cmd.substring(9);
 				updateEditable("1", member_id, Share.this.task_id);
@@ -41,6 +46,10 @@ public class Share extends BasePage {
 
 		public static void updateEditable(String is_editable, String member_id, int task_id) {
 			SQL.update("update share set is_editable = ? where member = ? and task = ?", is_editable, member_id, String.valueOf(task_id));
+		}
+
+		public static void deleteEditable(String member_id, int task_id) {
+			SQL.delete("delete from share where member = ? and task = ?", member_id, String.valueOf(task_id));
 		}
 	}
 
@@ -68,21 +77,25 @@ public class Share extends BasePage {
 			String member_id = str_list.get(0);
 			String member_name = str_list.get(1);
 			String editable = str_list.get(2);
-			JLabel name_label = panel.createLabel(member_name, 0.3, panel_height, 0.2, 0.05);
+			JLabel name_label = panel.createLabel(member_name, 0.2, panel_height, 0.2, 0.05);
 			boolean is_editable = false;
 			if (editable.equals("1"))
 				is_editable = true;
-			JRadioButton radio1 = panel.createRadioButton("Editable", is_editable, 0.55, panel_height, 0.1, 0.05);
-			JRadioButton radio2 = panel.createRadioButton("Viewable", !is_editable, 0.7, panel_height, 0.1, 0.05);
+			JRadioButton radio1 = panel.createRadioButton("Editable", is_editable, 0.45, panel_height, 0.1, 0.05);
+			JRadioButton radio2 = panel.createRadioButton("Viewable", !is_editable, 0.6, panel_height, 0.1, 0.05);
 			radio1.setActionCommand("Editable_" + member_id);
 			radio1.addActionListener(action);
 			radio2.setActionCommand("Viewable_" + member_id);
 			radio2.addActionListener(action);
+			JButton delete_button = panel.createButton("Delete", 0.75, panel_height, 0.1, 0.05);
+			delete_button.setActionCommand("Delete_" + member_id);
+			delete_button.addActionListener(action);
 			ButtonGroup bgroup = new ButtonGroup();
 			bgroup.add(radio1);
 			bgroup.add(radio2);
 			panel.add(radio1);
 			panel.add(radio2);
+			panel.add(delete_button);
 			panel.add(name_label);
 
 			panel_height = panel_height + 0.05;
