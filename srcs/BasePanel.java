@@ -42,6 +42,16 @@ public class BasePanel extends JPanel {
 		return (text_field);
 	}
 
+	public JTextArea createTextArea(String introduction, int row, int column, double x, double y, double width, double height) {
+		JTextArea text_area = new JTextArea(introduction, row, column);
+		text_area.setBounds(convertAbsToRelValue(this._win_width, x),
+			convertAbsToRelValue(this._win_height, y),
+			convertAbsToRelValue(this._win_width, width),
+			convertAbsToRelValue(this._win_height, height));
+		text_area.setLineWrap(true);
+		return (text_area);
+	}
+
 	public JLabel createLabel(String name, double x, double y, double width, double height) {
 		JLabel label = new JLabel(name);
 		label.setBounds(convertAbsToRelValue(this._win_width, x),

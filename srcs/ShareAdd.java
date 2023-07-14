@@ -93,6 +93,11 @@ public class ShareAdd extends BasePage {
 				ArrayList<String> str_list = search_list.get(i);
 				String username = str_list.get(0);
 				String user_id = str_list.get(1);
+				if (user_id.equals(ShareAdd.this._frame.getLoginId()))
+					continue;
+				ArrayList<ArrayList<String>> check_list = SQL.select("SELECT member FROM share WHERE task=? and member=?", 1,String.valueOf(this.task_id), user_id);
+				if (check_list.size() != 0)
+					continue;
 				JLabel search_label = panel.createLabel(username, 0.3, panel_height, 0.2, 0.05);
 				JButton search_ans = panel.createButton("set Viewable", 0.55, panel_height, 0.15, 0.05);
 				search_ans.setActionCommand("User_" + user_id);

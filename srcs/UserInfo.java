@@ -7,6 +7,7 @@ public class UserInfo extends BasePage {
 	private String user_id;
 	private String username;
 	private String email;
+	private String introduction;
 	private String is_public;
 
 	public UserInfo(BaseFrame frame) { super(frame); }
@@ -32,11 +33,12 @@ public class UserInfo extends BasePage {
 	}
 
 	public void setUserInfo() {
-		ArrayList<ArrayList<String>> info = SQL.select("select name, email, is_public from member where id=?", 3, user_id);
+		ArrayList<ArrayList<String>> info = SQL.select("select name, email, introduction, is_public from member where id=?", 4, user_id);
 		ArrayList<String> str_list = info.get(0);
 		this.username = str_list.get(0);
 		this.email = str_list.get(1);
-		this.is_public = str_list.get(2);
+		this.introduction = str_list.get(2);
+		this.is_public = str_list.get(3);
 	}
 
 	public BasePanel createPage() {
@@ -50,11 +52,12 @@ public class UserInfo extends BasePage {
 		label.setHorizontalAlignment(JLabel.CENTER);
 		JLabel username_label = panel.createLabel("Username: " + this.username, 0.3, 0.2, 0.15, 0.05);
 		JLabel email_label = panel.createLabel("email: " + this.email, 0.3, 0.3, 0.3, 0.05);
+		JLabel introduction_label = panel.createLabel("introduction: " + this.introduction, 0.3, 0.4, 0.6, 0.05);
 
 		String is_public_str = "Public";
 		if (is_public.equals("0"))
 			is_public_str = "Private";
-		JLabel public_label = panel.createLabel("setting: " + is_public_str, 0.3, 0.4, 0.3, 0.05);
+		JLabel public_label = panel.createLabel("setting: " + is_public_str, 0.3, 0.5, 0.3, 0.05);
 
 		panel.add(label);
 		panel.add(username_label);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class MyInfoEdit extends BasePage {
 	private JTextField email_field;
+	private JTextArea introduction_area;
 	private JPasswordField password_field;
 	private JPasswordField confirm_field;
 	private JPasswordField old_password_field;
@@ -15,6 +16,8 @@ public class MyInfoEdit extends BasePage {
 	private JLabel flash_message;
 	private String username;
 	private String email;
+	private String introduction;
+	private String is_public;
 	ButtonGroup bgroup;
 
 	public MyInfoEdit(BasePage page) { super(page); }
@@ -43,6 +46,7 @@ public class MyInfoEdit extends BasePage {
 
 		public BasePage checkEdit() {
 			String email = email_field.getText();
+			String introduction = introduction_area.getText();
 			String password = new String(password_field.getPassword());
 			String confirm = new String(confirm_field.getPassword());
 			String old_password = new String(old_password_field.getPassword());
@@ -64,6 +68,7 @@ public class MyInfoEdit extends BasePage {
 				if (checkPass(password, confirm))
 					updatePassword(password, id);
 				updateEmail(email, id);
+				updateIntroduction(introduction, id);
 				updateIsPublic(is_public, id);
 				return (new MyInfo(MyInfoEdit.this, "User update!"));
 			}
@@ -72,6 +77,10 @@ public class MyInfoEdit extends BasePage {
 
 		public static void updateEmail(String email, String id) {
 			SQL.update("update member set email = ? where id = ?", email, id);
+		}
+
+		public static void updateIntroduction(String introduction, String id) {
+			SQL.update("update member set introduction = ? where id = ?", introduction, id);
 		}
 
 		public static void updateIsPublic(String is_public, String id) {
@@ -148,10 +157,12 @@ public class MyInfoEdit extends BasePage {
 
 	public void setMyInfo() {
 		String id = MyInfoEdit.this._frame.getLoginId();
-		ArrayList<ArrayList<String>> info = SQL.select("select name, email from member where id=?", 2, id);
+		ArrayList<ArrayList<String>> info = SQL.select("select name, email, introduction, is_public from member where id=?", 4, id);
 		ArrayList<String> str_list = info.get(0);
 		this.username = str_list.get(0);
 		this.email = str_list.get(1);
+		this.introduction = str_list.get(2);
+		this.is_public = str_list.get(3);
 	}
 
 	public BasePanel createPage() {
@@ -174,22 +185,31 @@ public class MyInfoEdit extends BasePage {
 		email_error = panel.createLabel("", 0.2, 0.35, 0.5, 0.05);
 		email_error.setForeground(Color.RED);
 
-		JLabel password_label = panel.createLabel("New Password: ", 0.05, 0.4, 0.15, 0.05);
-		password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
-		password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
+		JLabel introduction_label = panel.createLabel("introduction: ", 0.05, 0.4, 0.15, 0.05);
+		introduction_area = panel.createTextArea(introduction, 10, 80, 0.2, 0.4, 0.6, 0.25);
+		// JScrollPane scrollpanel = new JScrollPane(introduction_area);
+		// introduction_error = panel.createLabel("", 0.2, 0.35, 0.5, 0.05);
+		// introduction_error.setForeground(Color.RED);
+
+		JLabel password_label = panel.createLabel("New Password: ", 0.05, 0.7, 0.15, 0.05);
+		password_field = panel.createPasswordField("", 0.2, 0.7, 0.6, 0.05);
+		password_error = panel.createLabel("", 0.2, 0.75, 0.5, 0.05);
 		password_error.setForeground(Color.RED);
 
-		JLabel confirm_label = panel.createLabel("Confirm Password: ", 0.05, 0.5, 0.15, 0.05);
-		confirm_field = panel.createPasswordField("", 0.2, 0.5, 0.6, 0.05);
-		confirm_error = panel.createLabel("", 0.2, 0.55, 0.5, 0.025);
+		JLabel confirm_label = panel.createLabel("Confirm Password: ", 0.05, 0.8, 0.15, 0.05);
+		confirm_field = panel.createPasswordField("", 0.2, 0.8, 0.6, 0.05);
+		confirm_error = panel.createLabel("", 0.2, 0.85, 0.5, 0.025);
 		confirm_error.setForeground(Color.RED);
 
-		JRadioButton radio1 = panel.createRadioButton("Public", true, 0.2, 0.575, 0.15, 0.05);
-		JRadioButton radio2 = panel.createRadioButton("Private", false, 0.4, 0.575, 0.2, 0.05);
+		boolean public_check = false;
+		if (this.is_public.equals("1"))
+			public_check = true;
+		JRadioButton radio1 = panel.createRadioButton("Public", public_check, 0.2, 0.875, 0.15, 0.05);
+		JRadioButton radio2 = panel.createRadioButton("Private", !public_check, 0.4, 0.875, 0.2, 0.05);
 
-		JLabel old_password_label = panel.createLabel("Old Password: ", 0.05, 0.65, 0.15, 0.05);
-		old_password_field = panel.createPasswordField("", 0.2, 0.65, 0.6, 0.05);
-		old_password_error = panel.createLabel("", 0.2, 0.7, 0.5, 0.05);
+		JLabel old_password_label = panel.createLabel("Old Password: ", 0.05, 0.95, 0.15, 0.05);
+		old_password_field = panel.createPasswordField("", 0.2, 0.95, 0.6, 0.05);
+		old_password_error = panel.createLabel("", 0.2, 1.0, 0.5, 0.05);
 		old_password_error.setForeground(Color.RED);
 
 		bgroup = new ButtonGroup();
@@ -203,6 +223,9 @@ public class MyInfoEdit extends BasePage {
 		panel.add(email_label);
 		panel.add(email_error);
 		panel.add(email_field);
+		panel.add(introduction_label);
+		panel.add(introduction_area);
+		// panel.add(scrollpanel);
 		panel.add(password_label);
 		panel.add(password_error);
 		panel.add(password_field);
@@ -217,13 +240,15 @@ public class MyInfoEdit extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Back to MyInfo", 0.2, 0.75, 0.2, 0.05);
+		JButton button = panel.createButton("Back to MyInfo", 0.2, 1.05, 0.2, 0.05);
 		button.addActionListener(action);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Complete Editing", 0.5, 0.75, 0.2, 0.05);
+		JButton button2 = panel.createButton("Complete Editing", 0.5, 1.05, 0.2, 0.05);
 		button2.addActionListener(action);
 		panel.add(button2);
+
+		panel.setPreferredSize(new Dimension(900, (int)(600*1.2)));
 
 		return (panel);
 	}

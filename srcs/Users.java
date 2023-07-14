@@ -78,6 +78,8 @@ public class Users extends BasePage {
 				ArrayList<String> str_list = search_list.get(i);
 				String username = str_list.get(0);
 				String user_id = str_list.get(1);
+				if (user_id.equals(Users.this._frame.getLoginId()))
+					continue;
 				JButton search_ans = panel.createButton(username, 0.35, panel_height, 0.3, 0.05);
 				search_ans.setActionCommand("User_" + user_id);
 				search_ans.addActionListener(action);
