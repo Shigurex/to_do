@@ -56,7 +56,7 @@ public class ToDo extends BasePage {
 			if (page_from.equals("MyTask"))
 				return (new MyTask(ToDo.this));
 			else if (page_from.equals("ArchivedTask"))
-				return (new Error(ToDo.this));
+				return (new ArchivedTask(ToDo.this));
 			else if (page_from.equals("SharedTask"))
 				return (new SharedTask(ToDo.this));
 			return (null);

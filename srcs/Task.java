@@ -16,11 +16,11 @@ public class Task extends BasePage {
 			if (cmd.equals("My Task"))
 				page = new MyTask(Task.this);
 			else if (cmd.equals("Archived Task"))
-				page = new MyTask(Task.this);
+				page = new ArchivedTask(Task.this);
 			else if (cmd.equals("Shared Task"))
 				page = new SharedTask(Task.this);
 			else
-				page = new Error(Task.this);
+				page = new ArchivedTask(Task.this);
 
 			if (page != null)
 				Task.this._frame.changePanel(page.createPage());
