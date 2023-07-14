@@ -18,7 +18,7 @@ public class Task extends BasePage {
 			else if (cmd.equals("Archived Task"))
 				page = new MyTask(Task.this);
 			else if (cmd.equals("Shared Task"))
-				page = new MyTask(Task.this);
+				page = new SharedTask(Task.this);
 			else
 				page = new Error(Task.this);
 

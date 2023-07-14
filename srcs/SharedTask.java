@@ -10,13 +10,13 @@ import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-public class MyTask extends BasePage {
+public class SharedTask extends BasePage {
 	private JTable table;
 	ToDoTableModel model;
 	ArrayList<ArrayList<String>> info_total;
 
-	public MyTask(BasePage page) { super(page); }
-	public MyTask(BaseFrame frame) { super(frame); }
+	public SharedTask(BasePage page) { super(page); }
+	public SharedTask(BaseFrame frame) { super(frame); }
 
 	public class Action implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -24,16 +24,16 @@ public class MyTask extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Add Task"))
-				page = new TaskAdd(MyTask.this);
+				page = new TaskAdd(SharedTask.this);
 			else if (cmd.equals("Back to Task"))
-				page = new Task(MyTask.this);
+				page = new Task(SharedTask.this);
 			else if (cmd.equals("Get ToDo"))
 				page = getSelectedTask();
 			else
-				page = new Error(MyTask.this);
+				page = new Error(SharedTask.this);
 
 			if (page != null)
-				MyTask.this._frame.changePanel(page.createPage());
+				SharedTask.this._frame.changePanel(page.createPage());
 		}
 
 		public BasePage getSelectedTask() {
@@ -42,7 +42,7 @@ public class MyTask extends BasePage {
 				return (null);
 			ArrayList<String> str_list = info_total.get(selected_row);
 			int task_id = Integer.valueOf(str_list.get(0));
-			return (new ToDo(MyTask.this, task_id, "MyTask"));
+			return (new ToDo(SharedTask.this, task_id, "SharedTask"));
 		}
 	}
 
@@ -51,7 +51,7 @@ public class MyTask extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(new BorderLayout());
 
-		JLabel label = panel.createLabel("My Task", 0.45, 0.1, 0.1, 0.05);
+		JLabel label = panel.createLabel("Shared Task", 0.45, 0.1, 0.1, 0.05);
 		label.setFont(new Font("Arial", Font.PLAIN, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label, BorderLayout.NORTH);
@@ -60,8 +60,8 @@ public class MyTask extends BasePage {
 
 		model = new ToDoTableModel(null, columns);
 
-		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and m.id = ? group by ta.id;", 3, String.valueOf(MyTask.this._frame.getLoginId()));
-		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and m.id = ? group by ta.id;", 6, String.valueOf(MyTask.this._frame.getLoginId()));
+		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and m.id = ? group by ta.id;", 3, String.valueOf(SharedTask.this._frame.getLoginId()));
+		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and m.id = ? group by ta.id;", 6, String.valueOf(SharedTask.this._frame.getLoginId()));
 		int index = 0;
 		String selected_list_id = null;
 		if (index != info_selected.size())

@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
 public class ToDo extends BasePage {
+	private static String page_from = "MyTask";
 	private int task_id;
 	private JTable table;
 	private ToDoTableModel model;
@@ -23,6 +24,11 @@ public class ToDo extends BasePage {
 		super(page);
 		this.task_id = task_id;
 	}
+	public ToDo(BasePage page, int task_id, String page_from) {
+		super(page);
+		ToDo.page_from = page_from;
+		this.task_id = task_id;
+	}
 
 	public class Action implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -30,7 +36,7 @@ public class ToDo extends BasePage {
 			BasePage page = null;
 
 			if (cmd.equals("Back to Task"))
-				page = new Task(ToDo.this);
+				page = getPreviousPage();
 			else if (cmd.equals("Add ToDo"))
 				page = new ToDoAdd(ToDo.this, task_id);
 			else if (cmd.equals("Edit ToDo"))
@@ -44,6 +50,16 @@ public class ToDo extends BasePage {
 
 			if (page != null)
 				ToDo.this._frame.changePanel(page.createPage());
+		}
+
+		public BasePage getPreviousPage() {
+			if (page_from.equals("MyTask"))
+				return (new MyTask(ToDo.this));
+			else if (page_from.equals("ArchivedTask"))
+				return (new Error(ToDo.this));
+			else if (page_from.equals("SharedTask"))
+				return (new SharedTask(ToDo.this));
+			return (null);
 		}
 
 		public BasePage getSelectedToDo() {
