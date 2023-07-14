@@ -25,6 +25,8 @@ public class ArchivedTask extends BasePage {
 
 			if (cmd.equals("Add Task"))
 				page = new TaskAdd(ArchivedTask.this);
+			else if (cmd.equals("Delete Task"))
+				page = deleteTask();
 			else if (cmd.equals("Back to Task"))
 				page = new Task(ArchivedTask.this);
 			else if (cmd.equals("Get ToDo"))
@@ -36,6 +38,18 @@ public class ArchivedTask extends BasePage {
 
 			if (page != null)
 				ArchivedTask.this._frame.changePanel(page.createPage());
+		}
+
+		public BasePage deleteTask() {
+			int selected_row = table.getSelectedRow();
+			if (selected_row == -1)
+				return (null);
+			ArrayList<String> str_list = info_total.get(selected_row);
+			int task_id = Integer.valueOf(str_list.get(0));
+			SQL.delete("delete from share where task = ?", String.valueOf(task_id));
+			SQL.delete("delete from todo where task = ?", String.valueOf(task_id));
+			SQL.delete("delete from task where id = ?", String.valueOf(task_id));
+			return (new ArchivedTask(ArchivedTask.this));
 		}
 
 		public BasePage unarchiveTask() {
@@ -70,7 +84,7 @@ public class ArchivedTask extends BasePage {
 
 		String[] columns = {"Name", "Description", "Total", "Completed", "Uncompleted"};
 
-		model = new ToDoTableModel(null, columns);
+		model = new ToDoTableModel(null, columns, false);
 
 		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and ta.is_archive = ? and m.id = ? group by ta.id;", 3, "1", String.valueOf(ArchivedTask.this._frame.getLoginId()));
 		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and ta.is_archive = ? and m.id = ? group by ta.id;", 6, "1", String.valueOf(ArchivedTask.this._frame.getLoginId()));
@@ -136,6 +150,10 @@ public class ArchivedTask extends BasePage {
 		JButton unarchive_button = panel.createButton("Unarchive Task", 0.7, 0.1, 0.1, 0.05);
 		unarchive_button.addActionListener(action);
 		button_panel.add(unarchive_button);
+
+		JButton delete_button = panel.createButton("Delete Task", 0.7, 0.1, 0.1, 0.05);
+		delete_button.addActionListener(action);
+		button_panel.add(delete_button);
 
 		panel.add(button_panel, BorderLayout.SOUTH);
 
