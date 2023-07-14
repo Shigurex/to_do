@@ -25,6 +25,8 @@ public class SharedTask extends BasePage {
 
 			if (cmd.equals("Add Task"))
 				page = new TaskAdd(SharedTask.this);
+			else if (cmd.equals("Delete Task"))
+				page = deleteTask();
 			else if (cmd.equals("Back to Task"))
 				page = new Task(SharedTask.this);
 			else if (cmd.equals("Get ToDo"))
@@ -34,6 +36,16 @@ public class SharedTask extends BasePage {
 
 			if (page != null)
 				SharedTask.this._frame.changePanel(page.createPage());
+		}
+
+		public BasePage deleteTask() {
+			int selected_row = table.getSelectedRow();
+			if (selected_row == -1)
+				return (null);
+			ArrayList<String> str_list = info_total.get(selected_row);
+			int task_id = Integer.valueOf(str_list.get(0));
+			SQL.delete("delete from share where task = ?", String.valueOf(task_id));
+			return (new SharedTask(SharedTask.this));
 		}
 
 		public BasePage getSelectedTask() {
@@ -121,6 +133,10 @@ public class SharedTask extends BasePage {
 		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
 		todo_button.addActionListener(action);
 		button_panel.add(todo_button);
+
+		JButton delete_button = panel.createButton("Delete Task", 0.7, 0.1, 0.1, 0.05);
+		delete_button.addActionListener(action);
+		button_panel.add(delete_button);
 
 		panel.add(button_panel, BorderLayout.SOUTH);
 
