@@ -13,7 +13,8 @@ import javax.swing.table.TableColumn;
 public class ToDo extends BasePage {
 	private int task_id;
 	private JTable table;
-	TaskTableModel model;
+	ToDoTableModel model;
+	ToDoEditListener listener;
 	ArrayList<ArrayList<String>> info;
 
 	public ToDo(BasePage page) { super(page); }
@@ -81,7 +82,24 @@ public class ToDo extends BasePage {
 		panel.add(label, BorderLayout.NORTH);
 
 		String[] columns = {"Title", "Deadline", "Create Time", "Update Time", "Priority", "Done"};
-		model = new TaskTableModel(null, columns);
+
+		model = new ToDoTableModel(null, columns);
+
+		info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.priority, td.is_done, td.id from task ta, todo td where td.task=ta.id and ta.id=? order by td.is_done asc, td.deadline asc;", 7, String.valueOf(this.task_id));
+		for (int i = 0; i < info.size(); i++) {
+			ArrayList<String> str_list = info.get(i);
+			String todo_title = str_list.get(0);
+			String todo_deadline = str_list.get(1);
+			String todo_create_time = str_list.get(2);
+			String todo_update_time = str_list.get(3);
+			String todo_priority = str_list.get(4);
+			boolean todo_is_done = str_list.get(5).equals("1") ? true : false;
+			Object[] content = {todo_title, todo_deadline, todo_create_time, todo_update_time, todo_priority, todo_is_done};
+			model.addRow(content);
+		}
+
+		listener = new ToDoEditListener(model, this, task_id, info);
+		model.addTableModelListener(listener);
 		table = panel.createTable(model, 0, 0.2, 1, 0.5);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -98,19 +116,6 @@ public class ToDo extends BasePage {
 		view.setView(table);
 
 		panel.add(scrollpane, BorderLayout.CENTER);
-
-		info = SQL.select("select td.title, td.deadline, td.create_time, td.update_time, td.priority, td.is_done, td.id from task ta, todo td where td.task=ta.id and ta.id=? order by td.is_done asc, td.deadline asc;", 7, String.valueOf(this.task_id));
-		for (int i = 0; i < info.size(); i++) {
-			ArrayList<String> str_list = info.get(i);
-			String todo_title = str_list.get(0);
-			String todo_deadline = str_list.get(1);
-			String todo_create_time = str_list.get(2);
-			String todo_update_time = str_list.get(3);
-			String todo_priority = str_list.get(4);
-			boolean todo_is_done = str_list.get(5).equals("1") ? true : false;
-			Object[] content = {todo_title, todo_deadline, todo_create_time, todo_update_time, todo_priority, todo_is_done};
-			model.addRow(content);
-		}
 
 		Action action = new Action();
 
