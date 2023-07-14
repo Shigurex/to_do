@@ -29,7 +29,7 @@ public class SharedTask extends BasePage {
 				page = deleteTask();
 			else if (cmd.equals("Back to Task"))
 				page = new Task(SharedTask.this);
-			else if (cmd.equals("Get ToDo"))
+			else if (cmd.equals("Detail"))
 				page = getSelectedTask();
 			else
 				page = new Error(SharedTask.this);
@@ -140,7 +140,7 @@ public class SharedTask extends BasePage {
 		delete_button.setForeground(Color.RED);
 		button_panel.add(delete_button);
 
-		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
+		JButton todo_button = panel.createButton("Detail", 0.7, 0.1, 0.1, 0.05);
 		todo_button.addActionListener(action);
 		todo_button.setContentAreaFilled(false);
 		todo_button.setBorderPainted(false);

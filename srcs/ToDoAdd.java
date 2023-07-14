@@ -82,7 +82,8 @@ public class ToDoAdd extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("ToDoAdd", 0.45, 0.1, 0.1, 0.05);
+		JLabel label = panel.createLabel("ToDoAdd", 0.4, 0.1, 0.2, 0.05);
+		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		panel.add(label);
 

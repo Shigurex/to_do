@@ -128,24 +128,24 @@ public class SignUp extends BasePage {
 		JLabel label = panel.createLabel("SignUp", 0.35, 0.1, 0.3, 0.1);
 		label.setFont(new Font("Arial Black", Font.PLAIN, 30));
 		label.setHorizontalAlignment(JLabel.CENTER);
-		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
-		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
-		username_error = panel.createLabel("", 0.2, 0.25, 0.5,0.05);
+		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.3, 0.15, 0.05);
+		username_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
+		username_error = panel.createLabel("", 0.2, 0.35, 0.5,0.05);
 		username_error.setForeground(Color.RED);
 
-		JLabel email_label = panel.createLabel("email: ", 0.05, 0.3, 0.15, 0.05);
-		email_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
-		email_error = panel.createLabel("", 0.2, 0.35, 0.5, 0.05);
+		JLabel email_label = panel.createLabel("email: ", 0.05, 0.4, 0.15, 0.05);
+		email_field = panel.createTextField("", 0.2, 0.4, 0.6, 0.05);
+		email_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
 		email_error.setForeground(Color.RED);
 
-		JLabel password_label = panel.createLabel("password: ", 0.05, 0.4, 0.15, 0.05);
-		password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
-		password_error = panel.createLabel("", 0.2, 0.45, 0.5, 0.05);
+		JLabel password_label = panel.createLabel("password: ", 0.05, 0.5, 0.15, 0.05);
+		password_field = panel.createPasswordField("", 0.2, 0.5, 0.6, 0.05);
+		password_error = panel.createLabel("", 0.2, 0.55, 0.5, 0.05);
 		password_error.setForeground(Color.RED);
 
-		JLabel confirm_label = panel.createLabel("confirm password: ", 0.05, 0.5, 0.15, 0.05);
-		confirm_field = panel.createPasswordField("", 0.2, 0.5, 0.6, 0.05);
-		confirm_error = panel.createLabel("", 0.2, 0.55, 0.5, 0.05);
+		JLabel confirm_label = panel.createLabel("confirm password: ", 0.05, 0.6, 0.15, 0.05);
+		confirm_field = panel.createPasswordField("", 0.2, 0.6, 0.6, 0.05);
+		confirm_error = panel.createLabel("", 0.2, 0.65, 0.5, 0.05);
 		confirm_error.setForeground(Color.RED);
 
 		panel.add(label);
@@ -165,13 +165,13 @@ public class SignUp extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Register", 0.3, 0.7, 0.4, 0.05);
+		JButton button = panel.createButton("Register", 0.55, 0.75, 0.2, 0.1);
 		button.addActionListener(action);
 		button.setContentAreaFilled(false);
 		button.setForeground(Color.GREEN);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Back to Login", 0.3, 0.8, 0.4, 0.05);
+		JButton button2 = panel.createButton("Back to Login", 0.25, 0.75, 0.2, 0.1);
 		button2.addActionListener(action);
 		button2.setContentAreaFilled(false);
 		panel.add(button2);

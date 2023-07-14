@@ -73,8 +73,8 @@ public class ShareAdd extends BasePage {
 		panel.add(label);
 
 		JLabel username_label = panel.createLabel("Username Search: ", 0.05, 0.2, 0.15, 0.05);
-		username_field = panel.createTextField("", 0.2, 0.2, 0.5, 0.05);
-		username_error = panel.createLabel("",0.2, 0.25, 0.6, 0.05);
+		username_field = panel.createTextField("", 0.25, 0.2, 0.5, 0.05);
+		username_error = panel.createLabel("",0.25, 0.25, 0.6, 0.05);
 		username_error.setForeground(Color.RED);
 
 		panel.add(username_label);
@@ -83,7 +83,7 @@ public class ShareAdd extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Search", 0.75, 0.2, 0.1, 0.05);
+		JButton button = panel.createButton("Search", 0.8, 0.2, 0.1, 0.05);
 		button.addActionListener(action);
 		panel.add(button);
 
@@ -102,6 +102,7 @@ public class ShareAdd extends BasePage {
 				JButton search_ans = panel.createButton("set Viewable", 0.55, panel_height, 0.15, 0.05);
 				search_ans.setActionCommand("User_" + user_id);
 				search_ans.addActionListener(action);
+				search_ans.setContentAreaFilled(false);
 				panel.add(search_label);
 				panel.add(search_ans);
 

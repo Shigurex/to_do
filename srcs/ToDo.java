@@ -107,8 +107,8 @@ public class ToDo extends BasePage {
 		ArrayList<ArrayList<String>> name_info = SQL.select("select name from task where id=?;", 1, String.valueOf(this.task_id));
 		String name = name_info.get(0).get(0);
 
-		JLabel label = panel.createLabel(name, 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel label = panel.createLabel(name, 0.4, 0.1, 0.2, 0.1);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label, BorderLayout.NORTH);
 
@@ -154,25 +154,39 @@ public class ToDo extends BasePage {
 
 		JButton task_button = panel.createButton("Back to Task", 0.7, 0.1, 0.1, 0.05);
 		task_button.addActionListener(action);
+		task_button.setContentAreaFilled(false);
+		task_button.setBorderPainted(false);
+		task_button.setForeground(Color.GRAY);
 		button_panel.add(task_button);
 
 		if (is_editable) {
 			JButton todo_add_button = panel.createButton("Add ToDo", 0.2, 0.75, 0.2, 0.1);
 			todo_add_button.addActionListener(action);
+			todo_add_button.setContentAreaFilled(false);
+			todo_add_button.setBorderPainted(false);
+			todo_add_button.setForeground(Color.BLUE);
 			button_panel.add(todo_add_button);
 
 			JButton todo_edit_button = panel.createButton("Edit ToDo", 0.2, 0.75, 0.2, 0.1);
 			todo_edit_button.addActionListener(action);
+			todo_edit_button.setContentAreaFilled(false);
+			todo_edit_button.setBorderPainted(false);
+			todo_edit_button.setForeground(Color.BLUE);
 			button_panel.add(todo_edit_button);
 
 			JButton todo_delete_button = panel.createButton("Delete ToDo", 0.2, 0.75, 0.2, 0.1);
 			todo_delete_button.addActionListener(action);
+			todo_delete_button.setContentAreaFilled(false);
+			todo_delete_button.setBorderPainted(false);
+			todo_delete_button.setForeground(Color.RED);
 			button_panel.add(todo_delete_button);
 		}
 
 		if (is_shareable) {
 			JButton share_button = panel.createButton("Share", 0.7, 0.1, 0.1, 0.05);
 			share_button.addActionListener(action);
+			share_button.setContentAreaFilled(false);
+			share_button.setBorderPainted(false);
 			button_panel.add(share_button);
 		}
 

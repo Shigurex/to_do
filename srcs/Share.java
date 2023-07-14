@@ -59,7 +59,7 @@ public class Share extends BasePage {
 		panel.setLayout(null);
 
 		JLabel label = panel.createLabel("Share", 0.35, 0.1, 0.3, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(JLabel.CENTER);
 		panel.add(label);
 

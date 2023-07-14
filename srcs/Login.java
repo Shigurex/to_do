@@ -104,13 +104,13 @@ public class Login extends BasePage {
 		label.setFont(new Font("Arial Black", Font.PLAIN, 30));
 		label.setHorizontalAlignment(JLabel.CENTER);
 
-		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
-		username_field = panel.createTextField("", 0.2, 0.2, 0.6, 0.05);
-		username_error = panel.createLabel("",0.2, 0.25, 0.6, 0.05);
+		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.3, 0.15, 0.05);
+		username_field = panel.createTextField("", 0.2, 0.3, 0.6, 0.05);
+		username_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
 		username_error.setForeground(Color.RED);
-		JLabel password_label = panel.createLabel("password: ", 0.05, 0.3, 0.15, 0.05);
-		password_field = panel.createPasswordField("", 0.2, 0.3, 0.6, 0.05);
-		password_error = panel.createLabel("",0.2, 0.35, 0.6, 0.05);
+		JLabel password_label = panel.createLabel("password: ", 0.05, 0.4, 0.15, 0.05);
+		password_field = panel.createPasswordField("", 0.2, 0.4, 0.6, 0.05);
+		password_error = panel.createLabel("",0.2, 0.45, 0.6, 0.05);
 		password_error.setForeground(Color.RED);
 
 		panel.add(flash_message);
@@ -124,13 +124,13 @@ public class Login extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Login", 0.4, 0.5, 0.2, 0.05);
+		JButton button = panel.createButton("Login", 0.55, 0.6, 0.2, 0.1);
 		button.addActionListener(action);
 		button.setContentAreaFilled(false);
 		button.setForeground(Color.BLUE);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Go to SignUp", 0.4, 0.6, 0.2, 0.05);
+		JButton button2 = panel.createButton("Go to SignUp", 0.25, 0.6, 0.2, 0.1);
 		button2.addActionListener(action);
 		button2.setContentAreaFilled(false);
 		panel.add(button2);

@@ -32,8 +32,8 @@ public class Task extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("Task", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		JLabel label = panel.createLabel("Task", 0.45, 0.1, 0.1, 0.1);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 30));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label);
 
@@ -41,19 +41,19 @@ public class Task extends BasePage {
 
 		JButton my_task_add_button = panel.createButton("My Task", 0.4, 0.3, 0.2, 0.1);
 		my_task_add_button.addActionListener(action);
-		my_task_add_button.setFont(new Font("Arial", Font.PLAIN, 20));
+		my_task_add_button.setFont(new Font("Arial", Font.PLAIN, 15));
 		my_task_add_button.setContentAreaFilled(false);
 		panel.add(my_task_add_button);
 
 		JButton archived_task_add_button = panel.createButton("Archived Task", 0.2, 0.5, 0.2, 0.1);
 		archived_task_add_button.addActionListener(action);
-		archived_task_add_button.setFont(new Font("Arial", Font.PLAIN, 20));
+		archived_task_add_button.setFont(new Font("Arial", Font.PLAIN, 15));
 		archived_task_add_button.setContentAreaFilled(false);
 		panel.add(archived_task_add_button);
 
 		JButton shared_task_add_button = panel.createButton("Shared Task", 0.6, 0.5, 0.2, 0.1);
 		shared_task_add_button.addActionListener(action);
-		shared_task_add_button.setFont(new Font("Arial", Font.PLAIN, 20));
+		shared_task_add_button.setFont(new Font("Arial", Font.PLAIN, 15));
 		shared_task_add_button.setContentAreaFilled(false);
 		panel.add(shared_task_add_button);
 

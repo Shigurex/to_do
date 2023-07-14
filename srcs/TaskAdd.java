@@ -81,8 +81,9 @@ public class TaskAdd extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("TaskAdd", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel label = panel.createLabel("TaskAdd", 0.4, 0.1, 0.2, 0.05);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		panel.add(label);
 
 		JLabel name_label = panel.createLabel("Name: ", 0.05, 0.2, 0.15, 0.05);
