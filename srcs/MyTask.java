@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
+import javax.swing.border.LineBorder;
 
 public class MyTask extends BasePage {
 	private JTable table;
@@ -89,7 +90,7 @@ public class MyTask extends BasePage {
 		panel.setLayout(new BorderLayout());
 
 		JLabel label = panel.createLabel("My Task", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label, BorderLayout.NORTH);
 
@@ -152,27 +153,44 @@ public class MyTask extends BasePage {
 
 		JButton task_button = panel.createButton("Back to Task", 0.7, 0.1, 0.1, 0.05);
 		task_button.addActionListener(action);
+		task_button.setContentAreaFilled(false);
+		task_button.setBorderPainted(false);
+		task_button.setForeground(Color.GRAY);
 		button_panel.add(task_button);
 
 		JButton add_button = panel.createButton("Add Task", 0.7, 0.1, 0.1, 0.05);
 		add_button.addActionListener(action);
+		add_button.setContentAreaFilled(false);
+		add_button.setBorderPainted(false);
+		add_button.setForeground(Color.BLUE);
 		button_panel.add(add_button);
 
 		JButton edit_button = panel.createButton("Edit Task", 0.7, 0.1, 0.1, 0.05);
 		edit_button.addActionListener(action);
+		edit_button.setContentAreaFilled(false);
+		edit_button.setForeground(Color.BLUE);
+		edit_button.setBorderPainted(false);
 		button_panel.add(edit_button);
-
-		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
-		todo_button.addActionListener(action);
-		button_panel.add(todo_button);
 
 		JButton archive_button = panel.createButton("Archive Task", 0.7, 0.1, 0.1, 0.05);
 		archive_button.addActionListener(action);
+		archive_button.setContentAreaFilled(false);
+		archive_button.setBorderPainted(false);
+		archive_button.setForeground(Color.ORANGE);
 		button_panel.add(archive_button);
 
 		JButton delete_button = panel.createButton("Delete Task", 0.7, 0.1, 0.1, 0.05);
 		delete_button.addActionListener(action);
+		delete_button.setContentAreaFilled(false);
+		delete_button.setBorderPainted(false);
+		delete_button.setForeground(Color.RED);
 		button_panel.add(delete_button);
+
+		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
+		todo_button.addActionListener(action);
+		todo_button.setContentAreaFilled(false);
+		todo_button.setBorderPainted(false);
+		button_panel.add(todo_button);
 
 		panel.add(button_panel, BorderLayout.SOUTH);
 

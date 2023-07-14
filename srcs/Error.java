@@ -26,7 +26,7 @@ public class Error extends BasePage {
 		panel.setLayout(null);
 
 		JLabel label = panel.createLabel("Error", 0.45, 0.2, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setForeground(Color.RED);
 		panel.add(label);
 

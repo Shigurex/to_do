@@ -100,8 +100,8 @@ public class Login extends BasePage {
 		flash_message = panel.createLabel(this.message,0.4, 0.05, 0.2, 0.05);
 		flash_message.setForeground(Color.GREEN);
 		flash_message.setHorizontalAlignment(JLabel.CENTER);
-		JLabel label = panel.createLabel("Login", 0.35, 0.1, 0.3, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel label = panel.createLabel("Login", 0.35, 0.1, 0.3, 0.08);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 30));
 		label.setHorizontalAlignment(JLabel.CENTER);
 
 		JLabel username_label = panel.createLabel("Username: ", 0.05, 0.2, 0.15, 0.05);
@@ -124,12 +124,15 @@ public class Login extends BasePage {
 
 		Action action = new Action();
 
-		JButton button = panel.createButton("Login", 0.3, 0.6, 0.4, 0.05);
+		JButton button = panel.createButton("Login", 0.4, 0.5, 0.2, 0.05);
 		button.addActionListener(action);
+		button.setContentAreaFilled(false);
+		button.setForeground(Color.BLUE);
 		panel.add(button);
 
-		JButton button2 = panel.createButton("Go to SignUp", 0.3, 0.7, 0.4, 0.05);
+		JButton button2 = panel.createButton("Go to SignUp", 0.4, 0.6, 0.2, 0.05);
 		button2.addActionListener(action);
+		button2.setContentAreaFilled(false);
 		panel.add(button2);
 
 		return (panel);

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -34,22 +35,28 @@ public class Menu extends BasePage {
 
 		JButton button = new JButton("My Info");
 		button.addActionListener(action);
+		button.setContentAreaFilled(false);
 		panel.add(button);
 
 		JButton button2 = new JButton("Task");
 		button2.addActionListener(action);
+		button2.setContentAreaFilled(false);
 		panel.add(button2);
 
 		JButton button3 = new JButton("Users");
 		button3.addActionListener(action);
+		button3.setContentAreaFilled(false);
 		panel.add(button3);
 
 		JButton button4 = new JButton("Logout");
 		button4.addActionListener(action);
+		button4.setContentAreaFilled(false);
 		panel.add(button4);
 
 		JButton button5 = new JButton("Exit");
 		button5.addActionListener(action);
+		button5.setContentAreaFilled(false);
+		button5.setForeground(Color.RED);
 		panel.add(button5);
 
 		return (panel);

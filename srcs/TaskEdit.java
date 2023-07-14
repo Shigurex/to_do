@@ -100,7 +100,7 @@ public class TaskEdit extends BasePage {
 		setBeforeTask();
 
 		JLabel label = panel.createLabel("TaskEdit", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		panel.add(label);
 
 		JLabel name_label = panel.createLabel("Name: ", 0.05, 0.2, 0.15, 0.05);

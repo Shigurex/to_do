@@ -66,7 +66,7 @@ public class MyInfo extends BasePage {
 			flash_message.setForeground(Color.GREEN);
 		flash_message.setHorizontalAlignment(JLabel.CENTER);
 		JLabel label = panel.createLabel("My Information", 0.35, 0.1, 0.3, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(JLabel.CENTER);
 		JLabel username_label = panel.createLabel("Username: " + this.username, 0.3, 0.2, 0.5, 0.05);
 		JLabel email_label = panel.createLabel("email: " + this.email, 0.3, 0.3, 0.5, 0.05);

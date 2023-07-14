@@ -141,19 +141,30 @@ public class ArchivedTask extends BasePage {
 
 		JButton task_button = panel.createButton("Back to Task", 0.7, 0.1, 0.1, 0.05);
 		task_button.addActionListener(action);
+		task_button.setContentAreaFilled(false);
+		task_button.setBorderPainted(false);
+		task_button.setForeground(Color.GRAY);
 		button_panel.add(task_button);
-
-		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
-		todo_button.addActionListener(action);
-		button_panel.add(todo_button);
 
 		JButton unarchive_button = panel.createButton("Unarchive Task", 0.7, 0.1, 0.1, 0.05);
 		unarchive_button.addActionListener(action);
+		unarchive_button.setContentAreaFilled(false);
+		unarchive_button.setBorderPainted(false);
+		unarchive_button.setForeground(Color.ORANGE);
 		button_panel.add(unarchive_button);
 
 		JButton delete_button = panel.createButton("Delete Task", 0.7, 0.1, 0.1, 0.05);
 		delete_button.addActionListener(action);
+		delete_button.setContentAreaFilled(false);
+		delete_button.setBorderPainted(false);
+		delete_button.setForeground(Color.RED);
 		button_panel.add(delete_button);
+
+		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
+		todo_button.addActionListener(action);
+		todo_button.setContentAreaFilled(false);
+		todo_button.setBorderPainted(false);
+		button_panel.add(todo_button);
 
 		panel.add(button_panel, BorderLayout.SOUTH);
 

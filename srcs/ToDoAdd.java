@@ -83,7 +83,7 @@ public class ToDoAdd extends BasePage {
 		panel.setLayout(null);
 
 		JLabel label = panel.createLabel("ToDoAdd", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		panel.add(label);
 
 		JLabel title_label = panel.createLabel("Title: ", 0.05, 0.2, 0.15, 0.05);
@@ -138,7 +138,7 @@ public class ToDoAdd extends BasePage {
 
 		panel.add(button);
 		panel.add(button2);
-	
+
 		return (panel);
 	}
 }
