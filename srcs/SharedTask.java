@@ -64,8 +64,8 @@ public class SharedTask extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(new BorderLayout());
 
-		JLabel label = panel.createLabel("Shared Task", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel label = panel.createLabel("Shared Task", 0.4, 0.1, 0.2, 0.05);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label, BorderLayout.NORTH);
 

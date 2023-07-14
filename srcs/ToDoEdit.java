@@ -99,8 +99,9 @@ public class ToDoEdit extends BasePage {
 
 		setDefaultToDo();
 
-		JLabel label = panel.createLabel("ToDoEdit", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel label = panel.createLabel("ToDoEdit", 0.4, 0.1, 0.2, 0.05);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		label.setHorizontalAlignment(JLabel.CENTER);
 		panel.add(label);
 
 		JLabel title_label = panel.createLabel("Title: ", 0.05, 0.2, 0.15, 0.05);
@@ -181,7 +182,7 @@ public class ToDoEdit extends BasePage {
 
 		panel.add(button);
 		panel.add(button2);
-	
+
 		return (panel);
 	}
 }

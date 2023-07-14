@@ -78,7 +78,7 @@ public class ArchivedTask extends BasePage {
 		panel.setLayout(new BorderLayout());
 
 		JLabel label = panel.createLabel("Archived Task", 0.45, 0.1, 0.1, 0.05);
-		label.setFont(new Font("Arial", Font.PLAIN, 20));
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label, BorderLayout.NORTH);
 

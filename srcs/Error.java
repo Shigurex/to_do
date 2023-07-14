@@ -11,8 +11,8 @@ public class Error extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.equals("Back to Start"))
-				page = new Start(Error.this);
+			if (cmd.equals("Back to Login"))
+				page = new Login(Error.this);
 			else
 				page = new Error(Error.this);
 
@@ -30,7 +30,7 @@ public class Error extends BasePage {
 		label.setForeground(Color.RED);
 		panel.add(label);
 
-		JButton button = panel.createButton("Back to Start", 0.4, 0.5, 0.2, 0.1);
+		JButton button = panel.createButton("Back to Login", 0.4, 0.5, 0.2, 0.1);
 		Action action = new Action();
 		button.addActionListener(action);
 		panel.add(button);

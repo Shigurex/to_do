@@ -32,8 +32,8 @@ public class Task extends BasePage {
 		panel.is_menu = true;
 		panel.setLayout(null);
 
-		JLabel label = panel.createLabel("Task", 0.45, 0.1, 0.1, 0.1);
-		label.setFont(new Font("Arial Black", Font.PLAIN, 30));
+		JLabel label = panel.createLabel("Task", 0.4, 0.1, 0.2, 0.1);
+		label.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(label);
 
