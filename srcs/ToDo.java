@@ -29,7 +29,9 @@ public class ToDo extends BasePage {
 			String cmd = e.getActionCommand();
 			BasePage page = null;
 
-			if (cmd.equals("Add ToDo"))
+			if (cmd.equals("Back to Task"))
+				page = new Task(ToDo.this);
+			else if (cmd.equals("Add ToDo"))
 				page = new ToDoAdd(ToDo.this, task_id);
 			else if (cmd.equals("Edit ToDo"))
 				page = getSelectedToDo();
@@ -120,6 +122,10 @@ public class ToDo extends BasePage {
 		Action action = new Action();
 
 		JPanel button_panel = new JPanel();
+
+		JButton task_button = panel.createButton("Back to Task", 0.7, 0.1, 0.1, 0.05);
+		task_button.addActionListener(action);
+		button_panel.add(task_button);
 
 		JButton todo_add_button = panel.createButton("Add ToDo", 0.2, 0.75, 0.2, 0.1);
 		todo_add_button.addActionListener(action);

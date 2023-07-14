@@ -41,7 +41,6 @@ public class ShareAdd extends BasePage {
 		public BasePage searchUser() {
 			String username = username_field.getText();
 			username_field.setText("");
-			boolean is_valid = true;
 			if (username.equals("")) {
 				username_error.setText("Please input username");
 				search_list = null;
@@ -78,6 +77,7 @@ public class ShareAdd extends BasePage {
 		username_error = panel.createLabel("",0.2, 0.25, 0.6, 0.05);
 		username_error.setForeground(Color.RED);
 
+		panel.add(username_label);
 		panel.add(username_field);
 		panel.add(username_error);
 
