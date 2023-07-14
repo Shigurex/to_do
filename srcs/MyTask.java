@@ -29,11 +29,23 @@ public class MyTask extends BasePage {
 				page = new Task(MyTask.this);
 			else if (cmd.equals("Get ToDo"))
 				page = getSelectedTask();
+			else if (cmd.equals("Archive Task"))
+				page = archiveTask();
 			else
 				page = new Error(MyTask.this);
 
 			if (page != null)
 				MyTask.this._frame.changePanel(page.createPage());
+		}
+
+		public BasePage archiveTask() {
+			int selected_row = table.getSelectedRow();
+			if (selected_row == -1)
+				return (null);
+			ArrayList<String> str_list = info_total.get(selected_row);
+			int task_id = Integer.valueOf(str_list.get(0));
+			SQL.update("update task set is_archive = ? where id = ?", "1", String.valueOf(task_id));
+			return (new MyTask(MyTask.this));
 		}
 
 		public BasePage getSelectedTask() {
@@ -60,8 +72,8 @@ public class MyTask extends BasePage {
 
 		model = new ToDoTableModel(null, columns);
 
-		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and m.id = ? group by ta.id;", 3, String.valueOf(MyTask.this._frame.getLoginId()));
-		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and m.id = ? group by ta.id;", 6, String.valueOf(MyTask.this._frame.getLoginId()));
+		info_total = SQL.select("select ta.id, ta.name, ta.description from member m, task ta where ta.owner=m.id and ta.is_archive = ? and m.id = ? group by ta.id;", 3, "0", String.valueOf(MyTask.this._frame.getLoginId()));
+		ArrayList<ArrayList<String>> info_selected = SQL.select("select ta.id, ta.name, ta.description, count(td.id), sum(td.is_done), count(td.id) - sum(td.is_done) from member m, task ta, todo td where ta.owner=m.id and ta.id=td.task and ta.is_archive = ? and m.id = ? group by ta.id;", 6, "0", String.valueOf(MyTask.this._frame.getLoginId()));
 		int index = 0;
 		String selected_list_id = null;
 		if (index != info_selected.size())
@@ -120,6 +132,10 @@ public class MyTask extends BasePage {
 		JButton todo_button = panel.createButton("Get ToDo", 0.7, 0.1, 0.1, 0.05);
 		todo_button.addActionListener(action);
 		button_panel.add(todo_button);
+
+		JButton archive_button = panel.createButton("Archive Task", 0.7, 0.1, 0.1, 0.05);
+		archive_button.addActionListener(action);
+		button_panel.add(archive_button);
 
 		panel.add(button_panel, BorderLayout.SOUTH);
 
