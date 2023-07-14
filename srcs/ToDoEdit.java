@@ -53,7 +53,7 @@ public class ToDoEdit extends BasePage {
 
 		public BasePage checkField() {
 			String title = _title_field.getText();
-			String deadline = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(_deadline_field.getValue());
+			String deadline = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(_deadline_field.getValue());
 			int priority = Integer.valueOf(_bgroup.getSelection().getActionCommand());
 			if (!isValid(title, deadline))
 				return (null);
